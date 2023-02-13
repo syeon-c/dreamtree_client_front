@@ -1,11 +1,15 @@
 <template>
 
+
+
 </template>
 
-<script>
-export default {
-  name: "AppBarComponent"
-}
+<script setup>
+
+import {ref} from "vue";
+
+
+
 </script>
 
 <style scoped>

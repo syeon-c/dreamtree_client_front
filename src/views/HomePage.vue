@@ -4,13 +4,14 @@
 </DefaultLayout>
 </template>
 
-<script>
-import DefaultLayout from "@/layouts/DefaultLayout.vue";
+<script setup>
 
-export default {
-  name: "HomePage",
-  components: {DefaultLayout}
-}
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+
+
 </script>
 
 <style scoped>

@@ -1,10 +1,41 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-      v-model = "drawer"
-      location="left"
-      temporary
+      v-model="drawer"
+      expand-on-hover
+      rail
     >
+
+      <v-list
+        density="compact"
+        nav
+      >
+        <v-list-item>
+        <v-avatar>
+          <v-img
+            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            alt="John"
+          ></v-img>
+        </v-avatar>
+        </v-list-item>
+
+        <v-list-item
+          prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg"
+          title="Sandra Adams"
+          subtitle="sandra_a88@gmail.com"
+        ></v-list-item>
+
+        <v-list-item
+          prepend-icon="fa-solid fa-user"
+          title="My Page"
+        ></v-list-item>
+
+        <v-list-item
+          prepend-icon="fa-solid fa-envelope"
+          title="Mailbox"
+        ></v-list-item>
+
+      </v-list>
 
     </v-navigation-drawer>
 
@@ -65,6 +96,7 @@
 <script setup>
 
 import {ref} from "vue";
+import {useRouter} from "vue-router";
 
 const categories = ref([
   'Dashboard',
@@ -74,9 +106,13 @@ const categories = ref([
 
 const drawer = ref()
 
-const onClickMoveHome = () => {
+const router = useRouter()
+
+const onClickMoveHome = async () => {
 
   console.log("Move to HomePage...")
+
+  await router.push( { name: 'HomePage'})
 
 }
 
