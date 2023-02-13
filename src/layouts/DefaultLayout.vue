@@ -7,17 +7,26 @@
     >
 
     </v-navigation-drawer>
+
     <v-app-bar
       class="px-3"
       color="white"
       flat
       density="compact"
     >
-      <v-app-bar-nav-icon
-        @click.stop = "drawer = !drawer"
-      >
+      <div>
+        <v-icon
+          icon="fa-solid fa-bars"
+          @click.stop = "drawer = !drawer"
+        >
+        </v-icon>
 
-      </v-app-bar-nav-icon>
+        <v-icon
+          icon="fa-sharp fa-solid fa-house"
+          @click=onClickMoveHome
+        >
+        </v-icon>
+      </div>
       <v-spacer></v-spacer>
 
       <v-tabs
@@ -64,6 +73,12 @@ const categories = ref([
   'Updates',])
 
 const drawer = ref()
+
+const onClickMoveHome = () => {
+
+  console.log("Move to HomePage...")
+
+}
 
 
 </script>
