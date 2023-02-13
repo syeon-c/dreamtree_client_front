@@ -7,6 +7,14 @@ const routes = [
     name: 'HomePage',
     component: () => import('@/views/HomePage.vue'),
   },
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: () => import('@/views/MyPage.vue'),
+    children: [
+
+    ]
+  },
 ]
 
 const router = createRouter({

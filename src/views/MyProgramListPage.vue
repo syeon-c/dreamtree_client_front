@@ -1,15 +1,10 @@
 <template>
-  <v-list>
 
-
-
-
-  </v-list>
 </template>
 
 <script>
 export default {
-  name: "HomeComponent"
+  name: "MyProgramsPage"
 }
 </script>
 
