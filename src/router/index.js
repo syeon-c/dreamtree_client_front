@@ -20,6 +20,11 @@ const routes = [
     component: () => import('@/views/ParentMyPage.vue'),
   },
   {
+    path: '/mypage/parentInfo/:id',
+    name: 'ParentInfoPage',
+    component: () => import('@/views/ParentInfoPage.vue'),
+  },
+  {
     path: '/request',
     name: 'RequestListPage',
     component: () => import('@/views/RequestListPage.vue'),
