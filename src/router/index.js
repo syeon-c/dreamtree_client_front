@@ -1,5 +1,6 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import consts from "@/consts/const";
 
 const routes = [
   {
@@ -23,6 +24,12 @@ const routes = [
 
     ]
   },
+  {
+    path: '/programs',
+    name: consts.PROGRAM_LIST_PAGE,
+    component: () => import('@/views/ProgramListPage.vue')
+  }
+
 ]
 
 const router = createRouter({

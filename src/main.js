@@ -12,9 +12,10 @@ import { createApp } from 'vue'
 
 // Plugins
 import { registerPlugins } from '@/plugins'
+import VueWordCloud from "vuewordcloud";
 
 const app = createApp(App)
-
+app.component(VueWordCloud.name, VueWordCloud)
 registerPlugins(app)
 
 app.mount('#app')

@@ -75,7 +75,7 @@
 
         <v-menu
           v-for="category in categories"
-          :key="category"
+          :key="category.categoryId"
           open-on-hover :close-on-content-click="false"
         >
           <template v-slot:activator="{ props }">
@@ -86,16 +86,17 @@
               height="100%"
               v-bind="props"
             >
-              {{ category }}
+              {{ category.categoryName }}
             </v-btn>
           </template>
 
           <v-list class="bg-grey-lighten-3">
             <v-list-item
-              v-for="item in subjects"
-              :key="item"
+              v-for="item in category.subCategoryLists"
+              :key="item.subCategoryId"
+              @click="() => onClickSubCategory(item.subCategoryId)"
             >
-              {{ item }}
+              {{ item.subCategoryName }}
             </v-list-item>
           </v-list>
         </v-menu>
@@ -141,26 +142,30 @@
 
 <script setup>
 
-import {ref} from "vue";
+import {onBeforeMount, ref} from "vue";
 import {useRouter} from "vue-router";
 import AddButtonComponent from "@/components/AddButtonComponent.vue";
+import {getHomeCategories} from "@/apis/api";
+import consts from "@/consts/const";
 
 /** 분야 카테고리 **/
-const categories = ref([
-  '악기',
-  '미술',
-  '체육',
-  '기타',])
-
-const subjects = ref([
-  'AAAAAA',
-  'BBBBBB',
-  'CCCCCC',
-])
+const categories = ref([])
 
 const drawer = ref()
 
 const router = useRouter()
+
+const fetchCategories = async () => {
+  const data = await getHomeCategories();
+  console.log(data);
+
+  categories.value = data
+}
+
+onBeforeMount(() => {
+  fetchCategories()
+})
+
 
 /** 클릭시 HomePage 이동 **/
 const onClickMoveHome = async () => {
@@ -187,6 +192,16 @@ const onClickMoveRequestPage = async () => {
 
   await router.push( { name: 'RequestListPage'})
 
+}
+
+/** 클릭시 ProgramListPage 이동 **/
+const onClickSubCategory = (subCategoryId) => {
+  router.push({
+    name: consts.PROGRAM_LIST_PAGE,
+    query: {
+      id: subCategoryId
+    }
+  })
 }
 
 
