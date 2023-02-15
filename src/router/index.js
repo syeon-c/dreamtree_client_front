@@ -17,6 +17,24 @@ const routes = [
     ]
   },
   {
+    path: '/member_management',
+    name: 'MemberManagementPage',
+    component: () => import('@/views/MemberManagementPage.vue')
+  },
+  {
+    path: '/student_info',
+    name: 'StudentInfoPage',
+    component: () => import('@/views/StudentInfoPage.vue')
+  },
+  {
+    path: '/mypage_admin',
+    name: 'MyPageAdmin',
+    component: () => import('@/views/MyPageAdmin.vue'),
+    children: [
+
+    ]
+  },
+  {
     path: '/request',
     name: 'RequestListPage',
     component: () => import('@/views/RequestListPage.vue'),
