@@ -12,16 +12,17 @@ const routes = [
     name: 'MyPage',
     component: () => import('@/views/MyPage.vue'),
     children: [
-
     ]
+  },
+  {
+    path: '/mypage/parent',
+    name: 'ParentMyPage',
+    component: () => import('@/views/ParentMyPage.vue'),
   },
   {
     path: '/request',
     name: 'RequestListPage',
     component: () => import('@/views/RequestListPage.vue'),
-    children: [
-
-    ]
   },
 ]
 
