@@ -76,7 +76,7 @@
         <v-menu
           v-for="category in categories"
           :key="category.categoryId"
-          open-on-hover :close-on-content-click="false"
+          open-on-hover :close-on-content-click="true"
         >
           <template v-slot:activator="{ props }">
             <v-btn

@@ -24,3 +24,14 @@ export const getProgramLists = async (searchOptions) => {
     return
   }
 }
+
+export const getWordCloudInfo = async () => {
+  try {
+    const res = await axios.get(`${consts.DOMAIN}/api/program/wordcloud`)
+
+    return res.data
+  } catch (e){
+    console.log(e)
+    return
+  }
+}

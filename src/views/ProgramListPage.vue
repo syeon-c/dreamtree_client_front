@@ -1,14 +1,17 @@
 <template>
+  <DefaultLayout>
 
+  </DefaultLayout>
 </template>
 
 <script setup>
 import {onMounted} from "vue";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {getProgramLists} from "@/apis/api";
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
 const route = useRoute()
-
+const router = useRouter()
 const fetchProgramLists = async () => {
   console.log(route.query)
   const searchOptions = {
@@ -25,6 +28,9 @@ onMounted(() => {
   fetchProgramLists();
 })
 
+router.beforeEach((to, from, next) => {
+  console.log(to)
+})
 </script>
 
 <style scoped>
