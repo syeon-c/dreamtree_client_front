@@ -15,6 +15,14 @@ const routes = [
 
     ]
   },
+  {
+    path: '/request',
+    name: 'RequestListPage',
+    component: () => import('@/views/RequestListPage.vue'),
+    children: [
+
+    ]
+  },
 ]
 
 const router = createRouter({

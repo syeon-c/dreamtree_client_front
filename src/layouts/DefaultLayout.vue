@@ -100,6 +100,16 @@
           </v-list>
         </v-menu>
 
+        <v-btn
+          variant="plain"
+          rounded="0"
+          class="align-self-center me-4"
+          height="100%"
+          @click="onClickMoveRequestPage"
+        >
+          요청
+        </v-btn>
+
       </v-tabs>
 
       <v-spacer></v-spacer>
@@ -120,7 +130,12 @@
         </v-sheet>
 
       </v-container>
+      <AddButtonComponent
+        style="alignment: right"
+      >
+      </AddButtonComponent>
     </v-main>
+
   </v-app>
 </template>
 
@@ -128,6 +143,7 @@
 
 import {ref} from "vue";
 import {useRouter} from "vue-router";
+import AddButtonComponent from "@/components/AddButtonComponent.vue";
 
 /** 분야 카테고리 **/
 const categories = ref([
@@ -161,6 +177,15 @@ const onClickMoveMyPage = async () => {
   console.log("Move to MyPage...")
 
   await router.push( { name: 'MyPage'})
+
+}
+
+/** 클릭시 RequestListPage 이동 **/
+const onClickMoveRequestPage = async () => {
+
+  console.log("Move to Request Page...")
+
+  await router.push( { name: 'RequestListPage'})
 
 }
 
