@@ -45,9 +45,24 @@ const routes = [
   },
   {
     path: '/programs',
-    name: consts.PROGRAM_LIST_PAGE,
-    component: () => import('@/views/ProgramListPage.vue')
-  }
+    children: [{
+        path: '',
+        name: consts.PROGRAM_LIST_PAGE,
+        component: () => import('@/views/program/ProgramListPage.vue')
+      },
+      {
+        path: ':id',
+        name: consts.PROGRAM_DETAIL_PAGE,
+        component: () => import('@/views/program/ProgramDetailPage.vue')
+      },
+      {
+        path: 'form',
+        name: consts.PROGRAM_ADD_PAGE,
+        component: () => import('@/views/program/ProgramAddPage.vue')
+      },
+    ]
+  },
+
 
 ]
 

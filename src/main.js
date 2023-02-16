@@ -13,9 +13,13 @@ import { createApp } from 'vue'
 // Plugins
 import { registerPlugins } from '@/plugins'
 import VueWordCloud from "vuewordcloud";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import './index.css'
 
 const app = createApp(App)
-app.component(VueWordCloud.name, VueWordCloud)
+  .component(VueWordCloud.name, VueWordCloud)
+  .component('font-awesome-icon', FontAwesomeIcon)
+
 registerPlugins(app)
 
 app.mount('#app')
