@@ -12,7 +12,7 @@
 <script setup>
 
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import ParentInfoComponent from "@/components/ParentInfoComponent.vue";
+import ParentInfoComponent from "@/components/parents/ParentInfoComponent.vue";
 import {useRoute, useRouter} from "vue-router";
 
 const route = useRoute()

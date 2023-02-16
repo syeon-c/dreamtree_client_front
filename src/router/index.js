@@ -9,20 +9,28 @@ const routes = [
   },
   {
     path: '/mypage',
-    name: 'MyPage',
-    component: () => import('@/views/MyPage.vue'),
     children: [
+      {
+        path: '',
+        name: 'MyPage',
+        component: () => import('@/views/Admin/MyPage.vue'),
+      },
+      {
+      path: 'member',
+      name: 'MemberAdminPage',
+      component: () => import('@/views/Admin/MemberAdminPage.vue')
+      },
+      {
+        path: 'parent',
+        name: 'ParentMyPage',
+        component: () => import('@/views/ParentMyPage.vue'),
+      },
+      {
+        path: 'parentInfo/:id',
+        name: 'ParentInfoPage',
+        component: () => import('@/views/ParentInfoPage.vue'),
+      },
     ]
-  },
-  {
-    path: '/mypage/parent',
-    name: 'ParentMyPage',
-    component: () => import('@/views/ParentMyPage.vue'),
-  },
-  {
-    path: '/mypage/parentInfo/:id',
-    name: 'ParentInfoPage',
-    component: () => import('@/views/ParentInfoPage.vue'),
   },
   {
     path: '/infoModify/:id',

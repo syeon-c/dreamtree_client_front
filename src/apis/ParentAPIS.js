@@ -23,3 +23,11 @@ export const updateParentInfo = async (data) => {
   return res.data
 
 }
+
+export const softDeleteParentInfo = async (id) => {
+
+  const res = await axios.delete(`http://localhost:8081/api/parent/delete/${id}`)
+
+  return res.data
+
+}

@@ -1,25 +1,35 @@
 <template>
-  <h2>MyPage</h2>
-  <v-list
-    density="compact"
-    nav
-  >
-    <v-list-item
-      prepend-icon="fa-solid fa-caret-right"
-      title="프로그램 관리"
-    >
+  <v-list lines="three">
+
+    <v-list-subheader>Admin Page</v-list-subheader>
+
+    <v-list-item>
+      <v-text>  프로그램 관리</v-text>
     </v-list-item>
 
-    <v-list-item
-      prepend-icon="fa-solid fa-caret-right"
-      title="출석 관리"
-    >
+
+    <v-divider/>
+
+    <v-list-item>
+      <v-text>  레슨 관리</v-text>
     </v-list-item>
 
-    <v-list-item
-      prepend-icon="fa-solid fa-caret-right"
-      title="회원정보 관리"
-    >
+    <v-divider/>
+
+    <v-list-item>
+      <v-text>  카테고리 관리</v-text>
+    </v-list-item>
+
+    <v-divider />
+
+    <v-list-item>
+      <v-text>  회원 관리</v-text>
+    </v-list-item>
+
+    <v-divider />
+
+    <v-list-item>
+      <v-text>  신고 관리</v-text>
     </v-list-item>
 
   </v-list>

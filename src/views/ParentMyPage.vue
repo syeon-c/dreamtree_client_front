@@ -10,7 +10,7 @@
 
 <script setup>
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import ParentMyPageComponent from "@/components/ParentMyPageComponent.vue";
+import ParentMyPageComponent from "@/components/parents/ParentMyPageComponent.vue";
 
 import {useRouter} from "vue-router";
 
