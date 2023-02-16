@@ -1,11 +1,13 @@
 <template>
+
   <v-btn
-    color="primary"
+    class="cube"
     size="large"
     icon="fa-solid fa-plus"
     @click="emits('onClickMoveProgramAddPage')"
   >
   </v-btn>
+
 </template>
 
 <script setup>

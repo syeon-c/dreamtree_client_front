@@ -70,7 +70,7 @@ const props = defineProps(['id'])
 const emits = defineEmits(['onClickMoveInfoModifyPage'])
 
 const info = ref({email: null, nickname: null, birth: null, profileImgUrl: null})
-const getInfo = async () => {
+const fetchGetInfo = async () => {
 
   const res = await getParentInfo(props.id)
   console.log(res)
@@ -79,7 +79,7 @@ const getInfo = async () => {
 }
 
 onMounted(() => {
-  getInfo()
+  fetchGetInfo()
 })
 
 
