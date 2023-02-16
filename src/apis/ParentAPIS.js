@@ -15,3 +15,11 @@ export const getParentInfo = async (id) => {
   return res.data
 
 }
+
+export const updateParentInfo = async (data) => {
+
+  const res = await axios.put(`http://localhost:8081/api/parent/modify`, data)
+
+  return res.data
+
+}

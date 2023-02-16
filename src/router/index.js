@@ -25,6 +25,11 @@ const routes = [
     component: () => import('@/views/ParentInfoPage.vue'),
   },
   {
+    path: '/infoModify/:id',
+    name: 'InfoModifyPage',
+    component: () => import('@/views/InfoModifyPage.vue'),
+  },
+  {
     path: '/request',
     name: 'RequestListPage',
     component: () => import('@/views/RequestListPage.vue'),
