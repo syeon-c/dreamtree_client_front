@@ -4,8 +4,11 @@
       <div>
         <form>
           <div style="display: flex">
-            <MainCategoryComponent></MainCategoryComponent>
-            <SubCategoryComponent></SubCategoryComponent>
+            <MainCategoryComponent @mainCategoryChange="mainCategoryChange"></MainCategoryComponent>
+            <SubCategoryComponent
+              :subCategoryList="subCategoryList"
+              @updateSubCategory="onUpdateSubCategory"
+            ></SubCategoryComponent>
           </div>
           <v-text-field
             class="mr-0 ml-0 mt-3 form-item"
@@ -62,40 +65,55 @@
 
 <script setup>
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import ProgramCurriculumDayComponent from "@/components/program/ProgramCurriculumDayComponent.vue";
-import {getHomeCategories, postProgramForm} from "@/apis/api";
+import {postProgramForm} from "@/apis/api";
 import MainCategoryComponent from "@/components/program/MainCategoryComponent.vue";
 import SubCategoryComponent from "@/components/program/SubCategoryComponent.vue";
 
 const programForm = ref({})
 const count = ref(0)
 const mainCurriculum = ref([])
+const subCategoryList = ref({})
 
-const categoryInfo = ref()
-const mainCategoryList = ref([])
-const subCategoryList = ref([])
+//부 카테고리 변경 시 programForm에 subCategoryId 추가
+const onUpdateSubCategory = (subCategoryId) => {
+  programForm.value.subCategoryId = subCategoryId
+  console.log(programForm.value)
+}
 
+//주 카테고리 변경시 categoryList 반환
+const mainCategoryChange = (categoryList) => {
+  subCategoryList.value = categoryList
+}
+
+//회차 업데이트
 const updateCurriculum = (curriculum, index) => {
   console.log(index)
   mainCurriculum.value[index] = curriculum
 }
 
+//회차 삭제
 const deleteDayCurriculum = (index) => {
   console.log(mainCurriculum.value[index])
   mainCurriculum.value = mainCurriculum.value.filter(e => e !== mainCurriculum.value[index])
   count.value++
 }
 
+
+//회차 추가
 const generateCurriculum = () => {
   mainCurriculum.value.push([])
+  programForm.value.times = mainCurriculum.value.length
 }
 
 //프로그램 생성
 const saveProgramForm = async () => {
   //maincurriculum, studentId, ProgramForm(subCategoryId, title, content, times, fee)
   programForm.value.times = mainCurriculum.value.length
-  await postProgramForm(mainCurriculum.value, 1, programForm)
+  console.log(JSON.stringify(mainCurriculum.value))
+  const studentId = 1
+  await postProgramForm(studentId, mainCurriculum.value, programForm.value)
 }
 </script>
 

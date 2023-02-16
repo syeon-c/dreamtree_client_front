@@ -33,7 +33,7 @@ export const getProgramLists = async (searchOptions, pageInfo) => {
 
 export const getWordCloudInfo = async () => {
   try {
-    const res = await axios.get(`${consts.DOMAIN}/api/program/wordcloud`)
+    const res = await axios.get(`${consts.DOMAIN}/api/program/wordcloud/`)
 
     return res.data
   } catch (e){
@@ -42,14 +42,16 @@ export const getWordCloudInfo = async () => {
   }
 }
 
-export const postProgramForm = async (programForm) => {
+export const postProgramForm = async (studentId, curriculum, programForm) => {
   try {
     const programFormDTO = {
       ...programForm,
       studentId: 1,
-      subCategoryId: 2
+      curriculumJson: JSON.stringify(curriculum),
+      fileForms: []
     }
-    const res = await axios.post(`${consts.DOMAIN}/api/program/wordcloud`)
+    console.log(programFormDTO)
+    const res = await axios.post(`${consts.DOMAIN}/api/program/form/`, programFormDTO)
 
     return res.data
   } catch (e){

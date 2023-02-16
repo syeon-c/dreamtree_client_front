@@ -5,7 +5,8 @@
     v-model="mainCategory"
     label="주 카테고리"
     :items="mainCategoryList"
-    @update:modelValue="() => temp(mainCategory)"
+    @update:modelValue="onUpdateCategoryValue"
+    return-object
   ></v-select>
 </template>
 
@@ -15,18 +16,26 @@ import {getHomeCategories} from "@/apis/api";
 import {onMounted, ref} from "vue";
 const mainCategory = ref();
 const mainCategoryList = ref([]);
-const emits = defineEmits(['mainCategory'])
+const subCategoryList = ref([])
+const emits = defineEmits(['mainCategoryChange'])
+
+const onUpdateCategoryValue = (mainCategoryObject) => {
+  const selectedCategoryIndex = mainCategoryObject.index
+  emits('mainCategoryChange', subCategoryList.value[selectedCategoryIndex])
+}
+
 const fetchCategories = async () => {
   const res = await getHomeCategories();
   console.log(res)
-  res.map(item => {
-    mainCategoryList.value.push(item.categoryName)
+  res.map((item, index) => {
+    mainCategoryList.value.push({
+      title: item.categoryName,
+      index: index
+    })
+    subCategoryList.value.push(item.subCategoryLists)
   })
 }
 
-const temp = async (category) => {
-  console.log(category)
-}
 onMounted(() => {
   fetchCategories()
 })
