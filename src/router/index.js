@@ -13,22 +13,22 @@ const routes = [
       {
         path: '',
         name: 'MyPage',
-        component: () => import('@/views/Admin/MyPage.vue'),
+        component: () => import('@/views/admin/MyPage.vue'),
       },
       {
       path: 'member',
       name: 'MemberAdminPage',
-      component: () => import('@/views/Admin/MemberAdminPage.vue')
+      component: () => import('@/views/admin/MemberAdminPage.vue')
       },
       {
         path: 'parent',
         name: 'ParentMyPage',
-        component: () => import('@/views/ParentMyPage.vue'),
+        component: () => import('@/views/parents/ParentMyPage.vue'),
       },
       {
         path: 'parentInfo/:id',
         name: 'ParentInfoPage',
-        component: () => import('@/views/ParentInfoPage.vue'),
+        component: () => import('@/views/parents/ParentInfoPage.vue'),
       },
     ]
   },
@@ -39,8 +39,19 @@ const routes = [
   },
   {
     path: '/request',
-    name: 'RequestListPage',
-    component: () => import('@/views/RequestListPage.vue'),
+    children: [
+      {
+        path: '',
+        name: 'RequestListPage',
+        component: () => import('@/views/request/RequestListPage.vue')
+      },
+      {
+        path: '/:id',
+        name: 'RequestDetailPage',
+        component: () => import('@/views/request/RequestDetailPage.vue')
+      },
+
+    ]
   },
 ]
 
