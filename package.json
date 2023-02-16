@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint . --fix --ignore-path .gitignore"
+    "lint": "eslint . --fix --ignore-path .gitignore",
+    "dev": "vite",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -15,9 +15,14 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@mdi/font": "7.0.96",
+    "@popperjs/core": "^2.11.6",
+    "autoprefixer": "^10.4.13",
     "axios": "^1.2.6",
     "core-js": "^3.8.3",
     "pinia": "^2.0.23",
+    "popper.js": "^1.16.1",
+    "portal-vue": "^2.1.7",
+    "postcss": "^8.4.21",
     "roboto-fontface": "*",
     "tailwindcss": "^3.2.6",
     "vue": "^3.2.47",
@@ -32,6 +37,7 @@
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
     "sass": "^1.55.0",
+    "sass-loader": "^10.0.2",
     "vite": "^3.1.9",
     "vite-plugin-vuetify": "^1.0.0-alpha.12",
     "vue-cli-plugin-bootstrap-vue": "~0.8.2"

@@ -40,3 +40,19 @@ export const getWordCloudInfo = async () => {
     return
   }
 }
+
+export const postProgramForm = async (programForm) => {
+  try {
+    const programFormDTO = {
+      ...programForm,
+      studentId: 1,
+      subCategoryId: 2
+    }
+    const res = await axios.post(`${consts.DOMAIN}/api/program/wordcloud`)
+
+    return res.data
+  } catch (e){
+    console.log(e)
+    return
+  }
+}
