@@ -1,5 +1,6 @@
 import axios from "axios";
 import consts from "@/consts/const";
+import {ca} from "vuetify/locale";
 
 export const getHomeCategories = async () => {
   try{
