@@ -17,17 +17,37 @@ const routes = [
     ]
   },
   {
-    path: '/member_management',
+    path: '/mypage/admin/member/management',
     name: 'MemberManagementPage',
     component: () => import('@/views/MemberManagementPage.vue')
   },
   {
-    path: '/student_info',
+    path: '/mypage/admin/auth/management',
+    name: 'AuthManagementPage',
+    component: () => import('@/views/AuthManagementPage.vue')
+  },
+  {
+    path: '/mypage/admin/college',
+    name: 'CollegeAuthInfoPage',
+    component: () => import('@/views/CollegeAuthInfoPage.vue')
+  },
+  {
+    path: '/mypage/admin/certificate',
+    name: 'CertificateAuthInfoPage',
+    component: () => import('@/views/CertificateAuthInfoPage.vue')
+  },
+  {
+    path: '/student',
     name: 'StudentInfoPage',
     component: () => import('@/views/StudentInfoPage.vue')
   },
   {
-    path: '/mypage_admin',
+    path: '/student/modify',
+    name: 'StudentModifyPage',
+    component: () => import('@/views/StudentModifyPage.vue')
+  },
+  {
+    path: '/mypage/admin',
     name: 'MyPageAdmin',
     component: () => import('@/views/MyPageAdmin.vue'),
     children: [

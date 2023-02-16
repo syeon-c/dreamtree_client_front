@@ -1,26 +1,26 @@
 <template>
 
-  <DefaultLayout>
+  <default-layout>
     <SearchComponent @clickSearch="clickSearch" />
-    <MemberManagementComponent
+    <CollegeAuthManagementComponent
       @movePageNum="movePageNum"
-      @moveStudentInfo="moveStudentInfo"
+      @moveCollegeAuthInfo="moveCollegeAuthInfo"
+      @moveCertificateAuthInfo="moveCertificateAuthInfo"
       :searchKeyword="searchKeyword"
       :pNum="pNum"
       :pSize="pSize"
       :key="componentKey"
     />
-  </DefaultLayout>
+  </default-layout>
 
 </template>
 
 <script setup>
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import MemberManagementComponent from "@/components/admin/MemberManagementComponent.vue";
-import {ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
 import SearchComponent from "@/components/admin/SearchComponent.vue";
-import AuthMamagementComponent from "@/components/admin/AuthManagementComponent.vue";
+import {useRoute, useRouter} from "vue-router";
+import {ref} from "vue";
+import CollegeAuthManagementComponent from "@/components/admin/AuthManagementComponent.vue";
 
 const router = useRouter()
 
@@ -51,7 +51,7 @@ const movePageNum = (pageNum) => {
 
   pNum.value = pageNum
 
-  router.push({ name: "MemberManagementPage",
+  router.push({ name: "CollegeAuthManagementPage",
     query: {
       ...searchKeyword.value,
       page: pNum.value,
@@ -60,11 +60,11 @@ const movePageNum = (pageNum) => {
   })
 }
 
-const moveStudentInfo = (id) => {
+const moveCollegeAuthInfo = (id) => {
 
   console.log("info")
 
-  router.push({ name: "StudentInfoPage",
+  router.push({ name: "CollegeAuthInfoPage",
     query: {
       id: id,
       page: pNum.value,
@@ -72,6 +72,20 @@ const moveStudentInfo = (id) => {
     }
   })
 }
+
+const moveCertificateAuthInfo = (id) => {
+
+  console.log("info")
+
+  router.push({ name: "CertificateAuthInfoPage",
+    query: {
+      id: id,
+      page: pNum.value,
+      size: pSize.value
+    }
+  })
+}
+
 
 router.beforeEach((to, from, next)=> {
 

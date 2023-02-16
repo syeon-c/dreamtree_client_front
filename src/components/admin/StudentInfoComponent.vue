@@ -9,7 +9,7 @@
   대학: {{student.college}} <br>
   전공: {{student.major}} <br>
   자격증: <br>
-
+  <br>
   <v-table>
     <thead>
       <tr>
@@ -27,20 +27,33 @@
     </tbody>
   </v-table>
 
+  <v-btn @click="() => emits('moveModify')">수정</v-btn>
+  <v-btn @click="clickRemoveStudent">삭제</v-btn>
 </template>
 
 <script setup>
 
-import {getStudentInfo} from "@/apis/api";
 import {onMounted, ref} from "vue";
+import {getStudentInfo, removeStudent} from "@/apis/adminAPIS";
 
 const props = defineProps(['id'])
 
-const student = ref()
+const emits = defineEmits(['moveModify', 'moveMemberManagement'])
+
+const student = ref({})
+
+const clickRemoveStudent = async () => {
+
+  await removeStudent(props.id)
+
+  emits('moveMemberManagement')
+}
 
 const fetchGetInfo = async () => {
 
   student.value = await getStudentInfo(props.id);
+
+  console.log("Student: ", student.value)
 
 }
 

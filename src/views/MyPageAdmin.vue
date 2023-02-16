@@ -9,7 +9,7 @@
 <script setup>
 
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import MyPageAdminComponent from "@/components/MyPageAdminComponent.vue";
+import MyPageAdminComponent from "@/components/admin/MyPageAdminComponent.vue";
 import {useRouter} from "vue-router";
 
 const router = useRouter()

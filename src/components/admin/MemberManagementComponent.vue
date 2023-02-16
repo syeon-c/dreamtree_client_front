@@ -1,19 +1,5 @@
 <template>
 
-  <v-card>
-    <v-card-title>
-      Nutrition
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
-  </v-card>
-
   <v-list lines="one">
     <v-list-item
       v-for="student in students"
@@ -42,7 +28,7 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
-import {getStudentLists} from "@/apis/api";
+import {getStudentLists} from "@/apis/adminAPIS";
 
 const props = defineProps(['searchKeyword', 'pSize', 'pNum'])
 
@@ -53,8 +39,6 @@ const pageNum = ref(1)
 const totalPageSize = ref()
 
 const students = ref([])
-
-const search = ref()
 
 const fetchGetList = async () => {
 
