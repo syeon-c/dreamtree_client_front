@@ -1,20 +1,20 @@
 <template>
 <DefaultLayout>
-  <vue-word-cloud
-    style="
-    height: 480px;
-    width: 640px;
-  "
-    :words="words"
-    :color="([, weight]) => weight > 10 ? 'DeepPink' : weight > 5 ? 'RoyalBlue' : 'Indigo'"
-    font-family="Roboto"
-  >
-    <template v-slot="{text, weight, word}">
-      <div :title="weight" style="cursor: pointer;" @click="() => onClickWord(word)">
-        {{ text }}
-      </div>
-    </template>
-  </vue-word-cloud>
+  <div class="vue-word-cloud-container">
+    <div class="vue-word-cloud-wrapper">
+      <vue-word-cloud
+        :words="words"
+        :color="([, weight]) => weight > 10 ? 'DeepPink' : weight > 5 ? 'RoyalBlue' : 'Indigo'"
+        font-family="Roboto"
+      >
+        <template v-slot="{text, weight, word}">
+          <div :title="weight" style="cursor: pointer;" @click="() => onClickWord(word[2])">
+            {{ text }}
+          </div>
+        </template>
+      </vue-word-cloud>
+    </div>
+  </div>
 </DefaultLayout>
 </template>
 
@@ -40,13 +40,12 @@ const fetchWordCloudInfo = async () => {
 }
 
 // 워드클라우드의 단어 클릭시
-const onClickWord = (word) => {
+const onClickWord = (id) => {
   //[부카테고리이름, 개수, 부카테고리id]
-  const subCategoryId = word[2]
   router.push({
     name: consts.PROGRAM_LIST_PAGE,
     query: {
-      id: subCategoryId
+      id: id
     }
   })
 }
@@ -59,5 +58,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+.vue-word-cloud-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.vue-word-cloud-wrapper{
+  max-width: 90%;
+  max-height: 90%;
+  min-width: 80%;
+  min-height: 50%;
+  height: 640px;
+  width: 480px;
+}
 </style>

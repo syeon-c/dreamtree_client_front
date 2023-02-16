@@ -4,6 +4,8 @@ const consts = {
 
 
   // page names
-  PROGRAM_LIST_PAGE: "ProgramListPage"
+  PROGRAM_LIST_PAGE: "ProgramListPage",
+  PROGRAM_DETAIL_PAGE: "ProgramDetailPage",
+  PROGRAM_ADD_PAGE: "ProgramAddPage"
 }
 export default consts;

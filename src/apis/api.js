@@ -12,10 +12,15 @@ export const getHomeCategories = async () => {
   }
 }
 
-export const getProgramLists = async (searchOptions) => {
+export const getProgramLists = async (searchOptions, pageInfo) => {
   try{
+    const params = {
+      ...searchOptions,
+      page: pageInfo.pageNum,
+      size: pageInfo.pageSize
+    }
     const res = await axios.get(`${consts.DOMAIN}/api/program/`, {
-      params: searchOptions
+      params: params
     })
 
     return res.data

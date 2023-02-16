@@ -129,12 +129,10 @@
           <slot></slot>
 
         </v-sheet>
+        <AddButtonComponent @onClickMoveProgramAddPage="onClickMoveProgramAddPage">
+        </AddButtonComponent>
 
       </v-container>
-      <AddButtonComponent
-        style="alignment: right"
-      >
-      </AddButtonComponent>
     </v-main>
 
   </v-app>
@@ -157,7 +155,6 @@ const router = useRouter()
 
 const fetchCategories = async () => {
   const data = await getHomeCategories();
-  console.log(data);
 
   categories.value = data
 }
@@ -195,15 +192,20 @@ const onClickMoveRequestPage = async () => {
 }
 
 /** 클릭시 ProgramListPage 이동 **/
-const onClickSubCategory = (subCategoryId) => {
-  router.push({
+const onClickSubCategory = async (subCategoryId) => {
+  await router.push({
     name: consts.PROGRAM_LIST_PAGE,
     query: {
-      id: subCategoryId
+      subCategoryId: subCategoryId
     }
   })
 }
 
+const onClickMoveProgramAddPage = async () => {
+  await router.push({
+    name:consts.PROGRAM_ADD_PAGE
+  })
+}
 
 </script>
 
