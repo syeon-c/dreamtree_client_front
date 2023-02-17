@@ -145,7 +145,7 @@
 
 import {onBeforeMount, ref} from "vue";
 import {useRouter} from "vue-router";
-import AddButtonComponent from "@/components/AddButtonComponent.vue";
+import AddButtonComponent from "@/components/common/AddButtonComponent.vue";
 import {getHomeCategories} from "@/apis/api";
 import consts from "@/consts/const";
 
