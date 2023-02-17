@@ -11,6 +11,7 @@
       <v-btn
         icon="fa-solid fa-plus"
         @click="onClickInsideAddButton"
+        :disabled="readMode"
       >
       </v-btn>
     </div>
@@ -23,7 +24,9 @@
 import {ref} from "vue";
 
 const emits = defineEmits(['onClickInsideAddButton'])
+const props = defineProps(['readMode'])
 const curriculumForm = ref()
+const readMode = ref(props.readMode)
 
 const onClickInsideAddButton = () => {
   emits('onClickInsideAddButton', curriculumForm.value)

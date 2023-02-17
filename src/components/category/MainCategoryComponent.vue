@@ -7,7 +7,8 @@
     :items="mainCategoryList"
     @update:modelValue="onUpdateCategoryValue"
     return-object
-  ></v-select>
+  >
+  </v-select>
 </template>
 
 <script setup>

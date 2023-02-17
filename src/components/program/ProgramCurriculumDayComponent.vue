@@ -5,6 +5,7 @@
       <!-- 전체 삭제 버튼 -->
       <v-btn flat icon="fa-solid fa-x" style="float: right"
         @click="emits('deleteDayCurriculum', curriculum)"
+        :disabled="readMode"
       ></v-btn>
     </v-card>
 
@@ -17,17 +18,23 @@
 
         <!-- todo: 수정 -->
         <v-btn icon="fa-solid fa-pencil"
+          :disabled="readMode"
+
         ></v-btn>
 
         <!-- 삭제 -->
         <v-btn icon="fa-solid fa-x"
           @click="() => removeCurriculum(content)"
+          :disabled="readMode"
         ></v-btn>
       </div>
     </v-card>
 
     <!-- input -->
-    <ProgramCurriculumComponent @onClickInsideAddButton="onClickInsideAddButton"></ProgramCurriculumComponent>
+    <ProgramCurriculumComponent
+      @onClickInsideAddButton="onClickInsideAddButton"
+      :readMode="readMode"
+    ></ProgramCurriculumComponent>
   </div>
 </template>
 
@@ -36,8 +43,8 @@ import {computed, ref, toRefs, watch} from "vue";
 import ProgramCurriculumComponent from "@/components/program/ProgramCurriculumComponent.vue";
 
 const emits = defineEmits(['pushCurriculum', 'deleteDayCurriculum'])
-const props = defineProps(['dayCurriculum'])
-
+const props = defineProps(['dayCurriculum', 'readMode'])
+const readMode = ref(props.readMode)
 const curriculum = ref(props.dayCurriculum)
 
 //1줄 삭제

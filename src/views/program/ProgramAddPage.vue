@@ -46,11 +46,14 @@
           <ProgramCurriculumDayComponent
             :key="count"
             :dayCurriculum="dayCurriculum"
+            :readMode="false"
             @pushCurriculum="(curriculum) => updateCurriculum(curriculum, index)"
             @deleteDayCurriculum="() => deleteDayCurriculum(index)"
           ></ProgramCurriculumDayComponent>
 
         </div>
+
+        <UploadComponent @addImages="addImages" @clickDialog="clickDialog"/>
 
         <v-btn
           append-icon="fa-solid fa-floppy-disk"
@@ -68,14 +71,19 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import {ref} from "vue";
 import ProgramCurriculumDayComponent from "@/components/program/ProgramCurriculumDayComponent.vue";
 import {postProgramForm} from "@/apis/api";
-import MainCategoryComponent from "@/components/program/MainCategoryComponent.vue";
-import SubCategoryComponent from "@/components/program/SubCategoryComponent.vue";
+import MainCategoryComponent from "@/components/category/MainCategoryComponent.vue";
+import SubCategoryComponent from "@/components/category/SubCategoryComponent.vue";
+import UploadComponent from "@/components/UploadComponent.vue";
 
 const programForm = ref({})
 const count = ref(0)
 const mainCurriculum = ref([])
 const subCategoryList = ref({})
 
+/*
+* 카테고리 select 컴포턴트 함수
+*
+* */
 //부 카테고리 변경 시 programForm에 subCategoryId 추가
 const onUpdateSubCategory = (subCategoryId) => {
   programForm.value.subCategoryId = subCategoryId
@@ -87,15 +95,15 @@ const mainCategoryChange = (categoryList) => {
   subCategoryList.value = categoryList
 }
 
+
+
 //회차 업데이트
 const updateCurriculum = (curriculum, index) => {
-  console.log(index)
   mainCurriculum.value[index] = curriculum
 }
 
 //회차 삭제
 const deleteDayCurriculum = (index) => {
-  console.log(mainCurriculum.value[index])
   mainCurriculum.value = mainCurriculum.value.filter(e => e !== mainCurriculum.value[index])
   count.value++
 }

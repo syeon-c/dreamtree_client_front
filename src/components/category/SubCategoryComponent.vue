@@ -19,6 +19,7 @@ const emits = defineEmits(['updateSubCategory'])
 const subCategoryList = ref([])
 
 watch(() => props.subCategoryList, (list) => {
+  categoryInfo.value = null
   list.map(item => {
     subCategoryList.value.push({
       title: item.subCategoryName,
