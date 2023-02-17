@@ -1,8 +1,11 @@
 import axios from "axios";
 import consts from "@/consts/const";
+import {ca} from "vuetify/locale";
 
 
 /*** 임성현 ver.0.1 ***/
+
+// 학생 리스트
 export const getStudentLists = async (keyword, page, size) => {
 
   let resultCondition = keyword.condition;
@@ -29,6 +32,7 @@ export const getStudentLists = async (keyword, page, size) => {
   }
 }
 
+// 대학 인증 요청 리스트
 export const getStudentCollegeAuthLists = async (keyword, page, size) => {
 
   let resultCondition = keyword.condition;
@@ -55,6 +59,7 @@ export const getStudentCollegeAuthLists = async (keyword, page, size) => {
   }
 }
 
+// 자격/수상 인증 요청 리스트
 export const getStudentCertificateAuthLists = async (keyword, page, size) => {
 
   let resultCondition = keyword.condition;
@@ -81,6 +86,7 @@ export const getStudentCertificateAuthLists = async (keyword, page, size) => {
   }
 }
 
+// 학생 정보 조회
 export const getStudentInfo = async (id) => {
 
   try {
@@ -94,6 +100,7 @@ export const getStudentInfo = async (id) => {
   }
 }
 
+// 대학 정보 조회
 export const getCollegeAuthInfo = async (id) => {
 
   try {
@@ -107,6 +114,7 @@ export const getCollegeAuthInfo = async (id) => {
   }
 }
 
+// 자격/수상 정보 조회
 export const getCertificateAuthInfo = async (id) => {
 
   try {
@@ -120,6 +128,7 @@ export const getCertificateAuthInfo = async (id) => {
   }
 }
 
+// 대학 인증 상태 업데이트
 export const modifyCollegeAuthState = async (id, authState) => {
 
   const result = {id: id, authState: authState}
@@ -135,6 +144,7 @@ export const modifyCollegeAuthState = async (id, authState) => {
   }
 }
 
+// 자격/수상 인증 상태 업데이트
 export const modifyCertificateAuthState = async (id, authState) => {
 
   const result = {id: id, authState: authState}
@@ -149,6 +159,8 @@ export const modifyCertificateAuthState = async (id, authState) => {
     return
   }
 }
+
+// 학생 정보 수정
 export const modifyStudent = async (student) => {
 
   try {
@@ -162,10 +174,11 @@ export const modifyStudent = async (student) => {
   }
 }
 
+// 학생 삭제
 export const removeStudent = async (id) => {
 
   try {
-    const res = await  axios.put(`${consts.DOMAIN}/api/students/remove/${id}`)
+    const res = await axios.put(`${consts.DOMAIN}/api/students/remove/${id}`)
 
     return res.data
 
@@ -174,3 +187,28 @@ export const removeStudent = async (id) => {
     return
   }
 }
+
+export const getCertificateList = async (id) => {
+
+  try {
+    const res = await axios.get(`${consts.DOMAIN}/api/certificate/${id}`)
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+
+export const addCertificate = async (certificate) => {
+
+  try {
+    const res = await axios.post(`${consts.DOMAIN}/api/certificate/form`, certificate)
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+

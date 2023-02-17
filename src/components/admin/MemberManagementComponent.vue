@@ -48,9 +48,11 @@ const fetchGetList = async () => {
 
   console.log(data)
 
+  console.log(Math.ceil(data.total/10))
+
   students.value = data.dtoList
 
-  totalPageSize.value = data.end
+  totalPageSize.value = Math.ceil(data.total/10)
 }
 
 onMounted(() => {
