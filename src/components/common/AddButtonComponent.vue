@@ -1,6 +1,7 @@
 <template>
 
-  <v-btn-group class="button_group horizontal" >
+
+  <div class="button_group horizontal" >
     <v-btn
       class="cube1"
       size="large"
@@ -20,7 +21,7 @@
       @click="emits('onClickMoveRequestAddPage')"
     ></v-btn>
 
-  </v-btn-group>
+  </div>
 
 </template>
 
