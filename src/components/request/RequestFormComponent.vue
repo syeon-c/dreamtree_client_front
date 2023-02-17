@@ -77,10 +77,16 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import MainCategoryComponent from "@/components/category/MainCategoryComponent.vue";
 import SubCategoryComponent from "@/components/category/SubCategoryComponent.vue";
-import {postRequest} from "@/apis/RequestAPIS";
+import {getRequestDetail, postRequest, putRequest} from "@/apis/RequestAPIS";
+import {useRoute} from "vue-router";
+
+const emits = defineEmits(['moveListPage', 'moveDetailPage'])
+
+const route = useRoute()
+const request_id = parseInt(route.params.id)
 
 const requestForm = ref({
   title: null,
@@ -98,8 +104,19 @@ const gradeList = ref(['입학예정', '저학년', '고학년', '중학생 이�
 
 const genderList = ['남', '여', '선택 안 함']
 
-const emits = defineEmits(['moveListPage'])
 
+const fetchGetRequestInfo = async () => {
+
+  console.log(request_id)
+
+  if(request_id) {
+    const res = await getRequestDetail(request_id)
+    requestForm.value = res
+  }
+}
+onMounted(() => {
+  fetchGetRequestInfo()
+})
 
 /** 카테고리 설정 **/
 //부 카테고리 변경 시 programForm에 subCategoryId 추가
@@ -119,6 +136,18 @@ const mainCategoryChange = (categoryList) => {
 /** 입력 폼 제출 **/
 const onClickSaveRequest = async () => {
 
+  // 요청글 수정으로 들어온 경우
+  if (request_id) {
+    requestForm.value.request_id = request_id
+
+    console.log("Modify...........")
+    console.log(requestForm.value)
+
+    await putRequest(requestForm.value)
+
+    emits('moveDetailPage', request_id)
+  }
+  // 요청글 작성으로 들어온 경우
   requestForm.value.description = requestForm.value.content.split(".")[0]
 
   console.log(requestForm.value)

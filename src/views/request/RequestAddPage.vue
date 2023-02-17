@@ -1,7 +1,7 @@
 <template>
   <DefaultLayout>
 
-    <RequestAddComponent
+    <RequestFormComponent
       @moveListPage="moveListPage"
     />
 
@@ -10,8 +10,8 @@
 
 <script setup>
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import RequestAddComponent from "@/components/request/RequestAddComponent.vue";
 import {useRouter} from "vue-router";
+import RequestFormComponent from "@/components/request/RequestFormComponent.vue";
 
 const router = useRouter()
 const moveListPage = () => {

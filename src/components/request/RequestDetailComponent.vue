@@ -27,9 +27,20 @@
       </div>
 
     </div>
+  </div>
+  <div class="d-flex">
+
+    <v-btn
+      @click="emits('moveModifyPage', props.id)"
+    >
+      수정
+    </v-btn>
+
+    <v-btn>
+      취소
+    </v-btn>
 
   </div>
-
 
 </template>
 
@@ -39,6 +50,7 @@ import {onMounted, ref} from "vue";
 import {getRequestDetail} from "@/apis/RequestAPIS";
 
 const props = defineProps(['id'])
+const emits = defineEmits(['moveModifyPage'])
 const info = ref({})
 
 const fetchGetRequestInfo = async () => {

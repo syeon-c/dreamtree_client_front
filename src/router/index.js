@@ -101,6 +101,11 @@ const routes = [
         name: 'RequestAddPage',
         component: () => import('@/views/request/RequestAddPage.vue')
       },
+      {
+        path: 'modify/:id',
+        name: 'RequestModifyPage',
+        component: () => import('@/views/request/RequestAddPage.vue')
+      },
 
     ]
   },
