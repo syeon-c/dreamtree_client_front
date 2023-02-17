@@ -30,6 +30,7 @@ const readMode = ref(props.readMode)
 
 const onClickInsideAddButton = () => {
   emits('onClickInsideAddButton', curriculumForm.value)
+  curriculumForm.value = null
 }
 
 </script>

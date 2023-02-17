@@ -1,6 +1,6 @@
 <template>
   <DefaultLayout>
-    <div class="form-container">
+    <v-container class="form-container">
       <div>
         <form>
 
@@ -55,16 +55,49 @@
 
         </div>
 
-        <UploadComponent @addImages="addImages" @clickDialog="clickDialog"/>
+        <!--이미지 업로드-->
+        <div>
+          <v-btn
+            prepend-icon="fa-solid fa-floppy-disk"
+            @click="onClickUploadButton"
+          >
+            Upload
+          </v-btn>
+        </div>
 
-        <v-btn
-          append-icon="fa-solid fa-floppy-disk"
-          @click="saveProgramForm"
-        >
-          프로그램 생성
-        </v-btn>
+        <div class="text-center">
+          <v-dialog
+            v-model="uploadDialog"
+          >
+            <UploadComponent @addImages="addImages" @offDialog="uploadDialog = false"/>
+          </v-dialog>
+        </div>
+
+        <ProgramImageListComponent
+          :imageNameList="imageNameList"
+          :key="imageListKey"
+          @onImageDeleted="onImageDeleted"
+        ></ProgramImageListComponent>
+
+        <!--생성 버튼-->
+        <div class="addCancel">
+          <v-btn
+            color="success"
+            class="me-2"
+            @click="saveProgramForm"
+          >
+            저장
+          </v-btn>
+          <v-btn
+            color="success"
+            class="me-4"
+            @click="cancelProgramForm"
+          >
+            취소
+          </v-btn>
+        </div>
       </div>
-    </div>
+    </v-container>
   </DefaultLayout>
 </template>
 
@@ -72,15 +105,39 @@
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import {ref} from "vue";
 import ProgramCurriculumDayComponent from "@/components/program/ProgramCurriculumDayComponent.vue";
-import {postProgramForm} from "@/apis/api";
+import {deleteMinioImage, postProgramForm} from "@/apis/api";
 import MainCategoryComponent from "@/components/category/MainCategoryComponent.vue";
 import SubCategoryComponent from "@/components/category/SubCategoryComponent.vue";
-import UploadComponent from "@/components/UploadComponent.vue";
+import UploadComponent from "@/components/image/UploadComponent.vue";
+import ProgramImageListComponent from "@/components/image/ImageListComponent.vue";
+import {useRouter} from "vue-router";
+import consts from "@/consts/const";
 
+const router = useRouter()
+//ref
 const programForm = ref({})
 const count = ref(0)
 const mainCurriculum = ref([])
 const subCategoryList = ref({})
+const uploadDialog = ref(false)
+const imageNameList = ref([])
+const imageListKey = ref(0)
+
+//첨부파일 dialog
+const onClickUploadButton = () => {
+  uploadDialog.value = true
+}
+
+//첨부파일 imageList에 추가, 추가시 ImageListComponent 리로딩
+const addImages = (imageNames) => {
+  imageNameList.value.push(...imageNames)
+  imageListKey.value++
+}
+
+//이미지 컴포넌트에서 delete시 업데이트
+const onImageDeleted = (imageList) => {
+  imageNameList.value = imageList
+}
 
 /*
 * 카테고리 select 컴포턴트 함수
@@ -89,7 +146,6 @@ const subCategoryList = ref({})
 //부 카테고리 변경 시 programForm에 subCategoryId 추가
 const onUpdateSubCategory = (subCategoryId) => {
   programForm.value.subCategoryId = subCategoryId
-  console.log(programForm.value)
 }
 
 //주 카테고리 변경시 categoryList 반환
@@ -121,9 +177,31 @@ const generateCurriculum = () => {
 const saveProgramForm = async () => {
   //maincurriculum, studentId, ProgramForm(subCategoryId, title, content, times, fee)
   programForm.value.times = mainCurriculum.value.length
-  console.log(JSON.stringify(mainCurriculum.value))
+
+  const fileForms = []
+  imageNameList.value.map(item => {
+    fileForms.push(item)
+  })
+  programForm.value.fileForms = fileForms
   const studentId = 1
-  await postProgramForm(studentId, mainCurriculum.value, programForm.value)
+  console.log(studentId, mainCurriculum.value, programForm.value)
+  const data = await postProgramForm(studentId, mainCurriculum.value, programForm.value)
+  await router.push({
+    name: consts.PROGRAM_DETAIL_PAGE,
+    params: {
+      id :data
+    }
+  })
+}
+
+const cancelProgramForm = async () => {
+  await deleteMinioImage(imageNameList.value)
+
+  imageNameList.value = []
+  await router.push({
+    name: consts.HOME_PAGE,
+  })
+
 }
 </script>
 
