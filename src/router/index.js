@@ -80,7 +80,7 @@ const routes = [
         component: () => import('@/views/request/RequestListPage.vue')
       },
       {
-        path: '/:id',
+        path: ':id',
         name: 'RequestDetailPage',
         component: () => import('@/views/request/RequestDetailPage.vue')
       },
