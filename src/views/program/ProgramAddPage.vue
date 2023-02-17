@@ -5,7 +5,9 @@
         <form>
 
           <div style="display: flex">
-            <MainCategoryComponent @mainCategoryChange="mainCategoryChange"></MainCategoryComponent>
+            <MainCategoryComponent
+              @mainCategoryChange="mainCategoryChange"
+            ></MainCategoryComponent>
             <SubCategoryComponent
               :subCategoryList="subCategoryList"
               @updateSubCategory="onUpdateSubCategory"

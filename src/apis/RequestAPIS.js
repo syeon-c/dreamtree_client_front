@@ -22,3 +22,19 @@ export const getRequestDetail = async (id) => {
   return res.data
 
 }
+
+export const postRequest = async (data) => {
+
+  const res = await axios.post(`http://localhost:8081/api/request/`, data)
+
+  return res.data
+
+}
+
+export const putRequest = async (data) => {
+
+  const res = await axios.put(`http://localhost:8081/api/request/modify`, data)
+
+  return res.data
+
+}

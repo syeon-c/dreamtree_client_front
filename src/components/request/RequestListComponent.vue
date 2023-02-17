@@ -63,7 +63,7 @@ const fetchGetReqeustList = async () => {
   console.log(res)
 
   requestList.value = res.dtoList
-  pageLen.value = res.end
+  pageLen.value = Math.ceil(res.total / props.pSize)
 
   console.log(requestList.value)
 
