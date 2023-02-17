@@ -44,5 +44,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+.form-container{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
 </style>

@@ -5,7 +5,7 @@ import consts from "@/consts/const";
 const routes = [
   {
     path: '/',
-    name: 'HomePage',
+    name: consts.HOME_PAGE,
     component: () => import('@/views/HomePage.vue'),
   },
   {
@@ -103,6 +103,15 @@ const routes = [
         path: 'form',
         name: consts.PROGRAM_ADD_PAGE,
         component: () => import('@/views/program/ProgramAddPage.vue')
+      },
+    ]
+  },
+  {
+    path: '/lesson',
+    children: [{
+        path: 'form',
+        name: consts.LESSON_ADD_PAGE,
+        component: () => import('@/views/lesson/LessonAddPage.vue')
       },
     ]
   },

@@ -48,11 +48,32 @@ export const postProgramForm = async (studentId, curriculum, programForm) => {
       ...programForm,
       studentId: 1,
       curriculumJson: JSON.stringify(curriculum),
-      fileForms: []
     }
     console.log(programFormDTO)
     const res = await axios.post(`${consts.DOMAIN}/api/program/form/`, programFormDTO)
+    return res.data
+  } catch (e){
+    console.log(e)
+    return
+  }
+}
 
+export const postUpload = async (formData) => {
+  try {
+    console.log(formData)
+    const res = await axios.post(`${consts.DOMAIN}/api/minio/upload`, formData)
+    return res.data
+  } catch (e){
+    console.log(e)
+    return
+  }
+}
+
+export const deleteMinioImage = async (fileNameList) => {
+  try {
+    const res = await axios.delete(`${consts.DOMAIN}/api/minio`, {
+      data: fileNameList
+    })
     return res.data
   } catch (e){
     console.log(e)
