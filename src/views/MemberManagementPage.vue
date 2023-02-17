@@ -20,7 +20,7 @@ import MemberManagementComponent from "@/components/admin/MemberManagementCompon
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import SearchComponent from "@/components/admin/SearchComponent.vue";
-import AuthMamagementComponent from "@/components/admin/AuthManagementComponent.vue";
+import AuthMamagementComponent from "@/components/admin/CollegeAuthManagementComponent.vue";
 
 const router = useRouter()
 
@@ -35,9 +35,13 @@ const pNum = ref(route.query.page || 1)
 const pSize = ref(route.query.size || 10)
 
 const clickSearch = (search) => {
+
   console.log(search)
+
   searchKeyword.value.keyword = search.keyword
+
   searchKeyword.value.condition = search.condition
+
   router.push({name: "MemberManagementPage",
     query: {
       keyword: searchKeyword.value.keyword,
