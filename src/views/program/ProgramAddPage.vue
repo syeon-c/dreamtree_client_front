@@ -3,10 +3,12 @@
     <div class="form-container">
       <div>
         <form>
+
           <div style="display: flex">
             <MainCategoryComponent></MainCategoryComponent>
             <SubCategoryComponent></SubCategoryComponent>
           </div>
+
           <v-text-field
             class="mr-0 ml-0 mt-3 form-item"
             v-model="programForm.title"

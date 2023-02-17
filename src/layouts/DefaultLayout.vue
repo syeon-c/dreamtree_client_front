@@ -129,7 +129,10 @@
           <slot></slot>
 
         </v-sheet>
-        <AddButtonComponent @onClickMoveProgramAddPage="onClickMoveProgramAddPage">
+        <AddButtonComponent
+          @onClickMoveProgramAddPage="onClickMoveProgramAddPage"
+          @onClickMoveRequestAddPage="onClickMoveRequestAddPage"
+        >
         </AddButtonComponent>
 
       </v-container>
@@ -205,6 +208,12 @@ const onClickMoveProgramAddPage = async () => {
   await router.push({
     name:consts.PROGRAM_ADD_PAGE
   })
+}
+
+const onClickMoveRequestAddPage = async () => {
+
+  await router.push( { name: 'RequestAddPage' })
+
 }
 
 </script>

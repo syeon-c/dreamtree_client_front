@@ -1,10 +1,18 @@
 <template>
+  <DefaultLayout>
 
+    <RequestAddComponent />
+
+  </DefaultLayout>
 </template>
 
 <script>
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import RequestAddComponent from "@/components/request/RequestAddComponent.vue";
+
 export default {
-  name: "RequestAddPage"
+  name: "RequestAddPage",
+  components: {RequestAddComponent, DefaultLayout}
 }
 </script>
 

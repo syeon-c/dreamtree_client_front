@@ -84,6 +84,11 @@ const routes = [
         name: 'RequestDetailPage',
         component: () => import('@/views/request/RequestDetailPage.vue')
       },
+      {
+        path: 'form',
+        name: 'RequestAddPage',
+        component: () => import('@/views/request/RequestAddPage.vue')
+      },
 
     ]
   },
