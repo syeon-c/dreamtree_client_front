@@ -136,6 +136,8 @@ const mainCategoryChange = (categoryList) => {
 /** 입력 폼 제출 **/
 const onClickSaveRequest = async () => {
 
+  requestForm.value.description = requestForm.value.content.split(".")[0]
+
   // 요청글 수정으로 들어온 경우
   if (request_id) {
     requestForm.value.request_id = request_id
@@ -148,8 +150,6 @@ const onClickSaveRequest = async () => {
     emits('moveDetailPage', request_id)
   }
   // 요청글 작성으로 들어온 경우
-  requestForm.value.description = requestForm.value.content.split(".")[0]
-
   console.log(requestForm.value)
 
   await postRequest(requestForm.value)
