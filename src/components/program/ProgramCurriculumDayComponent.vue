@@ -1,55 +1,67 @@
 <template>
-  <div class="curriculum-wrapper">
-
-    <v-card class="button-day">
-      <!-- 전체 삭제 버튼 -->
+  <v-container class="curriculum-wrapper">
+    <v-row
+      justify="center"
+      class="bg-black rounded"
+    >
+      <v-col>
+        {{props.times + 1}} 회차
+      </v-col>
+      <v-spacer></v-spacer>
       <v-btn flat icon="fa-solid fa-x" style="float: right"
         @click="emits('deleteDayCurriculum', curriculum)"
         :disabled="readMode"
       ></v-btn>
-    </v-card>
-
+    </v-row>
     <!-- 커리큘럼 -->
-    <v-card class="curriculum-day ma-2" v-for="(content, index) in curriculum" :key="index">
-      <div style="display: flex">
-        <v-card-text>
-          {{content}}
-        </v-card-text>
+    <v-row
+      v-for="(content, index) in curriculum"
+      :key="index"
+      class="curriculum-day"
+      justify="end"
+    >
+      <v-col>
+        {{content}}
 
         <!-- todo: 수정 -->
-        <v-btn icon="fa-solid fa-pencil"
+        <v-btn
+          class="float-right"
+          icon="fa-solid fa-pencil"
           :disabled="readMode"
-
         ></v-btn>
-
         <!-- 삭제 -->
-        <v-btn icon="fa-solid fa-x"
+        <v-btn
+          class="float-right"
+          icon="fa-solid fa-x"
           @click="() => removeCurriculum(content)"
           :disabled="readMode"
         ></v-btn>
-      </div>
-    </v-card>
+      </v-col>
+    </v-row>
 
-    <!-- input -->
-    <ProgramCurriculumComponent
-      @onClickInsideAddButton="onClickInsideAddButton"
-      :readMode="readMode"
-    ></ProgramCurriculumComponent>
-  </div>
+    <v-row>
+      <!-- input -->
+      <ProgramCurriculumComponent
+        @onClickInsideAddButton="onClickInsideAddButton"
+        :readMode="readMode"
+      ></ProgramCurriculumComponent>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup>
-import {computed, ref, toRefs, watch} from "vue";
+import {ref} from "vue";
 import ProgramCurriculumComponent from "@/components/program/ProgramCurriculumComponent.vue";
 
 const emits = defineEmits(['pushCurriculum', 'deleteDayCurriculum'])
-const props = defineProps(['dayCurriculum', 'readMode'])
+const props = defineProps(['dayCurriculum', 'readMode', 'times'])
 const readMode = ref(props.readMode)
 const curriculum = ref(props.dayCurriculum)
 
 //1줄 삭제
 const removeCurriculum = (content) => {
   curriculum.value = curriculum.value.filter(e => e !== content)
+  emits('pushCurriculum', curriculum.value)
 }
 
 //1줄 추가
@@ -62,21 +74,19 @@ const onClickInsideAddButton = (curriculumStr) => {
 
 <style scoped>
 .curriculum-wrapper{
-  max-width: 100%;
   border: #212529;
   border-style: solid;
   border-radius: 10px;
 }
 
 .curriculum-day{
-  max-width: 100%;
   border: #212529;
   border-style: solid;
   border-radius: 10px;
 }
 
 .button-day{
-  max-width: 100%;
+  border-radius: 10px;
   background-color: black;
 }
 

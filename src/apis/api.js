@@ -1,6 +1,7 @@
 import axios from "axios";
 import consts from "@/consts/const";
 import {ca} from "vuetify/locale";
+import {dayToBitParser} from "@/util/dayBitParser";
 
 export const getHomeCategories = async () => {
   try{
@@ -58,15 +59,20 @@ export const getWordCloudInfo = async () => {
   }
 }
 
-export const postProgramForm = async (studentId, curriculum, programForm) => {
+export const postProgramForm = async (programFormDTO) => {
   try {
-    const programFormDTO = {
-      ...programForm,
-      studentId: 1,
-      curriculumJson: JSON.stringify(curriculum),
-    }
     console.log(programFormDTO)
     const res = await axios.post(`${consts.DOMAIN}/api/program/form/`, programFormDTO)
+    return res.data
+  } catch (e){
+    console.log(e)
+    return
+  }
+}
+
+export const postLessonForm = async (lessonFormDTO) => {
+  try {
+    const res = await axios.post(`${consts.DOMAIN}/api/lesson/form/`, lessonFormDTO)
     return res.data
   } catch (e){
     console.log(e)
