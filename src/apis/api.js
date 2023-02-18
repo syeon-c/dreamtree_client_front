@@ -31,6 +31,22 @@ export const getProgramLists = async (searchOptions, pageInfo) => {
   }
 }
 
+export const getStudentProgramLists = async (studentId) => {
+  try{
+    const params = {
+      studentId: studentId
+    }
+    const res = await axios.get(`${consts.DOMAIN}/api/program/student`, {
+      params: params
+    })
+
+    return res.data
+  } catch (e){
+    console.log(e)
+    return
+  }
+}
+
 export const getWordCloudInfo = async () => {
   try {
     const res = await axios.get(`${consts.DOMAIN}/api/program/wordcloud/`)

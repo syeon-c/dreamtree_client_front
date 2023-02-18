@@ -132,6 +132,7 @@
         <AddButtonComponent
           @onClickMoveProgramAddPage="onClickMoveProgramAddPage"
           @onClickMoveRequestAddPage="onClickMoveRequestAddPage"
+          @onClickMoveLessonAddPage="onClickMoveLessonAddPage"
         >
         </AddButtonComponent>
 
@@ -207,6 +208,11 @@ const onClickSubCategory = async (subCategoryId) => {
 const onClickMoveProgramAddPage = async () => {
   await router.push({
     name:consts.PROGRAM_ADD_PAGE
+  })
+}
+const onClickMoveLessonAddPage = async () => {
+  await router.push({
+    name:consts.LESSON_ADD_PAGE
   })
 }
 
