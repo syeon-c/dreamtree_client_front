@@ -10,31 +10,32 @@
       <v-spacer></v-spacer>
       <v-btn flat icon="fa-solid fa-x" style="float: right"
         @click="emits('deleteDayCurriculum', curriculum)"
-        :disabled="readMode"
+        v-if="!readMode"
       ></v-btn>
     </v-row>
     <!-- 커리큘럼 -->
     <v-row
-      v-for="(content, index) in curriculum"
-      :key="index"
-      class="curriculum-day"
       justify="end"
     >
-      <v-col>
+      <v-col
+        v-for="(content, index) in curriculum"
+        class="curriculum-day ma-1"
+        :key="index"
+      >
         {{content}}
 
         <!-- todo: 수정 -->
         <v-btn
           class="float-right"
           icon="fa-solid fa-pencil"
-          :disabled="readMode"
+          v-if="!readMode"
         ></v-btn>
         <!-- 삭제 -->
         <v-btn
           class="float-right"
           icon="fa-solid fa-x"
           @click="() => removeCurriculum(content)"
-          :disabled="readMode"
+          v-if="!readMode"
         ></v-btn>
       </v-col>
     </v-row>

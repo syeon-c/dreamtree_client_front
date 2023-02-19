@@ -5,12 +5,14 @@
     label="커리큘럼 내용"
     single-line
     hide-detail
+    v-if="!readMode"
+
   ></v-text-field>
   <!--  추가버튼  -->
   <v-btn
     icon="fa-solid fa-plus"
     @click="onClickInsideAddButton"
-    :disabled="readMode"
+    v-if="!readMode"
   >
   </v-btn>
 

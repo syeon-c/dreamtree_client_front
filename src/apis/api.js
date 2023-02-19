@@ -59,6 +59,17 @@ export const getWordCloudInfo = async () => {
   }
 }
 
+export const getProgramDetailInfo = async (programId) => {
+  try{
+    const res = await axios.get(`${consts.DOMAIN}/api/program/details/${programId}`)
+
+    return res.data
+  } catch (e){
+    console.log(e)
+    return
+  }
+}
+
 export const postProgramForm = async (programFormDTO) => {
   try {
     console.log(programFormDTO)

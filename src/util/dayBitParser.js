@@ -18,5 +18,19 @@ export function dayToBitParser(day){
 
 //bit 받아서 list로 치환
 export function bitToDayParser(bit){
-  return bit.toString(2).split('')
+  const dayList = ['월', '화', '수', '목', '금', '토', '일']
+  const res = []
+
+  let count = 0
+
+  while(bit > 0){
+    if(bit % 2 == 1){
+      res.push(dayList[count])
+    }
+
+    bit = parseInt(bit / 2)
+    count += 1
+  }
+
+  return res
 }
