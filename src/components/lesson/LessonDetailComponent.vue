@@ -61,7 +61,7 @@
 <script setup>
 import {bitToDayParser} from "@/util/dayBitParser";
 
-const props = defineProps(['lessonInfo', 'programTitle'])
+const props = defineProps(['lessonInfo', 'programTitle']);
 </script>
 
 <style scoped>
