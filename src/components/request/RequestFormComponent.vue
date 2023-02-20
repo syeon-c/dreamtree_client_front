@@ -150,11 +150,15 @@ const onClickSaveRequest = async () => {
     emits('moveDetailPage', request_id)
   }
   // 요청글 작성으로 들어온 경우
-  console.log(requestForm.value)
+  else {
 
-  await postRequest(requestForm.value)
+    console.log(requestForm.value)
 
-  emits('moveListPage')
+    await postRequest(requestForm.value)
+
+    emits('moveListPage')
+
+  }
 }
 
 </script>

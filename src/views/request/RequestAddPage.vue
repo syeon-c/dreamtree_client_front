@@ -3,6 +3,7 @@
 
     <RequestFormComponent
       @moveListPage="moveListPage"
+      @moveDetailPage="moveDetailPage"
     />
 
   </DefaultLayout>
@@ -17,6 +18,12 @@ const router = useRouter()
 const moveListPage = () => {
 
   router.push({ name: 'RequestListPage' })
+
+}
+
+const moveDetailPage = (id) => {
+
+  router.push({ name: 'RequestDetailPage', params: {id: id}})
 
 }
 </script>

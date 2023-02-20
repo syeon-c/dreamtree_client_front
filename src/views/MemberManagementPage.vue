@@ -19,7 +19,7 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import MemberManagementComponent from "@/components/admin/MemberManagementComponent.vue";
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import SearchComponent from "@/components/admin/SearchComponent.vue";
+import SearchComponent from "@/components/common/SearchComponent.vue";
 import AuthMamagementComponent from "@/components/admin/CollegeAuthManagementComponent.vue";
 
 const router = useRouter()

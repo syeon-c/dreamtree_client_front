@@ -1,47 +1,50 @@
 <template>
+  <v-container>
+    <SearchComponent />
+    <v-list lines="one" class="ma-2">
+      <v-list-subheader>요청글 목록</v-list-subheader>
 
-  <v-list lines="one" class="ma-2">
-    <v-list-subheader>요청글 목록</v-list-subheader>
+      <v-list-item
+        v-for="request in requestList"
+        :key="request.id"
+        @click="() => emits(`onClickMoveRequestDetailPage`, request.requestId)"
+      >
+        <div class="d-flex flex-nowrap justify-space-between">
 
-    <v-list-item
-      v-for="request in requestList"
-      :key="request.id"
-      @click="() => emits(`onClickMoveRequestDetailPage`, request.requestId)"
-    >
-      <div class="d-flex flex-nowrap justify-space-between">
+          <div class="d-flex flex-no-wrap ma-1">
+            <div style="margin-left: 1px">
+              <v-card-title>{{ request.title }}</v-card-title>
+              <v-card-text>{{ request.description }}</v-card-text>
+            </div>
+          </div>
 
-        <div class="d-flex flex-no-wrap ma-1">
-          <div style="margin-left: 1px">
-            <v-card-title>{{ request.title }}</v-card-title>
-            <v-card-text>{{ request.description }}</v-card-text>
+          <div>
+            <v-card-text> {{ request.subCategoryName ? request.subCategoryName : "etc" }}</v-card-text>
+            <v-card-text> {{ request.createdAt }}</v-card-text>
           </div>
         </div>
+        <v-divider inset/>
+      </v-list-item>
+      <v-divider/>
+    </v-list>
 
-        <div>
-          <v-card-text> {{ request.subCategoryName ? request.subCategoryName : "etc" }}  </v-card-text>
-          <v-card-text> {{ request.createdAt }}</v-card-text>
-        </div>
-      </div>
-      <v-divider inset />
-    </v-list-item>
-    <v-divider />
-  </v-list>
+    <div>
+      <v-pagination
+        v-model="pageNum"
+        :length="pageLen"
+        rounded="circle"
+        @click="() => emits(`movePage`, pageNum)"
+      ></v-pagination>
+    </div>
 
-  <div>
-    <v-pagination
-      v-model="pageNum"
-      :length="pageLen"
-      rounded="circle"
-      @click="() => emits(`movePage`, pageNum)"
-    ></v-pagination>
-  </div>
-
+  </v-container>
 </template>
 
 <script setup>
 
 import {onMounted, ref} from "vue";
 import {getRequestList} from "@/apis/RequestAPIS";
+import SearchComponent from "@/components/common/SearchComponent.vue";
 
 const emits = defineEmits(['onClickMovePage'])
 const props = defineProps(['movePage', 'pNum', 'pSize', 'searchCondition'])

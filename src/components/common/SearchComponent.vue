@@ -18,7 +18,7 @@
       <div class="searchBtn">
         <v-btn
           @click="() => emits('clickSearch', selectSearchKeyword)"
-          append-icon="mdi-magnify">
+          append-icon="fa-solid fa-magnifying-glass" variant="plain">
           search
         </v-btn>
       </div>

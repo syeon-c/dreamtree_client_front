@@ -25,7 +25,7 @@
 
 <script setup>
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import SearchComponent from "@/components/admin/SearchComponent.vue";
+import SearchComponent from "@/components/common/SearchComponent.vue";
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import CollegeAuthManagementComponent from "@/components/admin/CollegeAuthManagementComponent.vue";
