@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <SearchComponent />
     <v-list lines="one" class="ma-2">
       <v-list-subheader>요청글 목록</v-list-subheader>
 

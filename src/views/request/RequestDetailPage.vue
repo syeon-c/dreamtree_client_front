@@ -4,6 +4,8 @@
     <RequestDetailComponent
       :id="id"
       @moveModifyPage="moveModifyPage"
+      @moveListPage="moveListPage"
+      @moveParentInfoPage="moveParentInfoPage"
     />
 
   </DefaultLayout>
@@ -23,6 +25,18 @@ const id = route.params.id
 const moveModifyPage = (id) => {
 
   router.push({ name: 'RequestModifyPage', params: {id: id}})
+
+}
+
+const moveListPage = () => {
+
+  router.push({ name: 'RequestListPage' })
+
+}
+
+const moveParentInfoPage = (id) => {
+
+  router.push({ name: 'ParentInfoPage', params: {id: id} })
 
 }
 

@@ -5,7 +5,6 @@
       expand-on-hover
       rail
     >
-
       <v-list
         density="compact"
         nav
@@ -39,7 +38,6 @@
       </v-list>
 
     </v-navigation-drawer>
-
     <v-app-bar
       class="px-3"
       color="white"
@@ -137,7 +135,6 @@
 
       </v-container>
     </v-main>
-
   </v-app>
 </template>
 

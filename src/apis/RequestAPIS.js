@@ -2,6 +2,12 @@ import axios from "axios";
 
 export const getRequestList = async (keyword, page, size) => {
 
+  if (keyword.condition == 'total') { keyword.condition = 'title,description,nickname,sub_category_name,category_name' }
+
+  if (keyword.condition == 'subCategory') { keyword.condition = 'sub_category_name' }
+
+  if (keyword.condition == 'category') { keyword.condition = 'category_name' }
+
   const res = await axios.get(`http://localhost:8081/api/request/list`, {
     params: {
       keyword: keyword.keyword,

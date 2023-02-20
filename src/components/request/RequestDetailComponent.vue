@@ -1,12 +1,27 @@
 <template>
-  <div style="margin-left: 30px; margin-right: 30px">
+  <v-container>
     <v-card-text>{{ info.subCategoryName ? info.subCategoryName : "etc" }}</v-card-text>
-    <p class="text-h4 text--primary">
+
+    <v-card-title class="text-h4 text--primary">
       {{ info.title }}
-    </p>
+    </v-card-title>
+
+    <v-card-actions class="justify-end">
+      <v-card-item>
+        {{ info.nickname }}
+      </v-card-item>
+      <v-card-item
+        prepend-icon="fa-solid fa-circle-info"
+        @click="emits('moveParentInfoPage', info.parentId)"
+      >
+      </v-card-item>
+    </v-card-actions>
+
     <br/>
+
     <p> {{ info.description }}</p>
     <br/>
+
     <div clas="text--primary">
 
       {{ info.content }}
@@ -14,7 +29,7 @@
     </div>
 
     <br/>
-    <v-divider />
+    <v-divider/>
     <div class="d-flex flex-nowrap justify-center">
       <div style="margin-right: 100px">
         <v-card-text>자녀의 학년</v-card-text>
@@ -27,7 +42,7 @@
       </div>
 
     </div>
-  </div>
+
   <div class="d-flex">
 
     <v-btn
@@ -36,12 +51,14 @@
       수정
     </v-btn>
 
-    <v-btn>
-      취소
+    <v-btn
+      @click="emits('moveListPage')"
+    >
+      목록
     </v-btn>
 
   </div>
-
+  </v-container>
 </template>
 
 <script setup>
@@ -50,7 +67,7 @@ import {onMounted, ref} from "vue";
 import {getRequestDetail} from "@/apis/RequestAPIS";
 
 const props = defineProps(['id'])
-const emits = defineEmits(['moveModifyPage'])
+const emits = defineEmits(['moveModifyPage', 'moveListPage'])
 const info = ref({})
 
 const fetchGetRequestInfo = async () => {
