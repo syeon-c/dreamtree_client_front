@@ -1,6 +1,8 @@
 <template>
   <DefaultLayout>
+
     <MyPageComponent/>
+
   </DefaultLayout>
 </template>
 

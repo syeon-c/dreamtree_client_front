@@ -31,6 +31,11 @@ const routes = [
         name: 'ParentInfoPage',
         component: () => import('@/views/parents/ParentInfoPage.vue'),
       },
+      {
+        path: 'progress/:id',
+        name: 'ProgressListPage',
+        component: () => import('@/views/parents/ProgressListPage.vue'),
+      },
     ]
   },
   {
