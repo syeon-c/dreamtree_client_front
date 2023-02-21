@@ -43,11 +43,10 @@
 <script setup>
 import ParentAdminComponent from "@/components/ParentAdminComponent.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import HomeComponent from "@/components/HomeComponent.vue";
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import MemberManagementComponent from "@/components/admin/MemberManagementComponent.vue";
-import SearchComponent from "@/components/admin/SearchComponent.vue";
+import SearchComponent from "@/components/common/SearchComponent.vue";
 
 const tab = ref()
 

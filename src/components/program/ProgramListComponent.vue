@@ -10,7 +10,7 @@
         :key="list.programId"
       >
         <v-list-item
-          :prepend-avatar="list.profileImgUrl || 'https://cdn.vuetifyjs.com/images/lists/3.jpg'"
+          :prepend-avatar="getPersonImageUrl(list.profileImgUrl)"
           :title="list.title"
           @click="emits('onClickProgramItem', list.programId)"
         >
@@ -39,6 +39,7 @@
 <script setup>
 import {getProgramLists} from "@/apis/api";
 import {onMounted, ref} from "vue";
+import {getPersonImageUrl} from "@/util/imageUrlGetter";
 const props = defineProps(['searchOptions', 'pageNum'])
 const programList = ref()
 const emits = defineEmits(['onClickMovePage', 'onClickProgramItem'])

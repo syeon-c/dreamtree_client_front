@@ -1,6 +1,9 @@
 <template>
   <DefaultLayout>
-    <ProgramSearchComponent @clickSearch="onClickSearch"></ProgramSearchComponent>
+    <ProgramSearchComponent
+      @clickSearch="onClickSearch"
+      :searchOptions="searchOptions"
+    ></ProgramSearchComponent>
     <ProgramListComponent
       :key="listComponentKey"
       :searchOptions="searchOptions"
@@ -27,7 +30,7 @@ const pageNum = ref(route.query.page || 1)
 
 const searchOptions = ref({
   keyword: route.query.keyword || "",
-  condition: route.query.condition || "title",
+  condition: route.query.condition || "total",
   order: route.query.order || "newest",
   subCategoryId: route.query.subCategoryId || 0
 })
@@ -35,6 +38,7 @@ const searchOptions = ref({
 //검색 버튼 클릭시
 const onClickSearch = (emittedSearchOptions) => {
   objectMapper(searchOptions.value, emittedSearchOptions)
+  listComponentKey.value++
 }
 
 //페이징 이동

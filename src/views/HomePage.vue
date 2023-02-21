@@ -45,7 +45,7 @@ const onClickWord = (id) => {
   router.push({
     name: consts.PROGRAM_LIST_PAGE,
     query: {
-      id: id
+      subCategoryId: id
     }
   })
 }

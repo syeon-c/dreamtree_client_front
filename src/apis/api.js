@@ -1,11 +1,15 @@
 import axios from "axios";
 import consts from "@/consts/const";
-import {ca} from "vuetify/locale";
-import {dayToBitParser} from "@/util/dayBitParser";
+import {searchOptionMapper} from "@/consts/searchOptionMapper";
 
-export const getHomeCategories = async () => {
+export const getLayoutInfo = async (id, role) => {
   try{
-    const res = await axios.get(`${consts.DOMAIN}/api/category/layout`)
+    const res = await axios.get(`${consts.DOMAIN}/api/category/layout`, {
+      params: {
+        id: id ? id : 0,
+        role: role ? role : "none"
+      }
+    })
 
     return res.data
   } catch (e){
@@ -21,6 +25,9 @@ export const getProgramLists = async (searchOptions, pageInfo) => {
       page: pageInfo.pageNum,
       size: pageInfo.pageSize
     }
+    params.condition = searchOptionMapper[searchOptions.condition]
+
+    console.log(params)
     const res = await axios.get(`${consts.DOMAIN}/api/program/`, {
       params: params
     })

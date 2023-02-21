@@ -6,7 +6,8 @@
     >
       <v-img
         v-if="programDetailInfo.profileImgUrl"
-        :src="`${consts.IMG_DOMAIN}/${programDetailInfo.profileImgUrl}` || 'https://cdn.vuetifyjs.com/images/lists/3.jpg'"
+        :src="getPersonImageUrl(programDetailInfo.profileImgUrl)"
+        @click="onClickStudentImage"
       >
         <template v-slot:placeholder>
           <div class="d-flex align-center justify-center fill-height">
@@ -59,12 +60,15 @@
 <script setup>
 import consts from "@/consts/const";
 import {ref} from "vue";
-
-
+import {getPersonImageUrl} from "@/util/imageUrlGetter";
 
 const props = defineProps(['programDetailInfo'])
 
 const model = ref()
+
+const onClickStudentImage = (temp) => {
+  console.log(temp)
+}
 
 </script>
 

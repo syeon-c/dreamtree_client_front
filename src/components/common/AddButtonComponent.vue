@@ -3,12 +3,14 @@
 
   <div class="button_group horizontal" >
     <v-btn
+      v-if="memberInfo.role == consts.STUDENT || memberInfo.role == consts.ADMIN"
       class="cube1"
       size="large"
       icon="fa-solid fa-plus"
       @click="emits('onClickMoveProgramAddPage')"
     ></v-btn>
     <v-btn
+      v-if="memberInfo.role == consts.STUDENT || memberInfo.role == consts.ADMIN"
       style="margin-left: 8px; margin-right: 8px"
       class="cube2"
       size="large"
@@ -16,6 +18,7 @@
       @click="emits('onClickMoveLessonAddPage')"
     ></v-btn>
     <v-btn
+      v-if="memberInfo.role == consts.PARENT || memberInfo.role == consts.ADMIN"
       class="cube3"
       size="large"
       icon="fa-solid fa-plus"
@@ -27,8 +30,12 @@
 </template>
 
 <script setup>
+import useMemberInfo from "@/store/useMemberInfo";
+import consts from "@/consts/const";
+
 const emits = defineEmits(['onClickMoveProgramAddPage', 'onClickMoveRequestAddPage', 'onClickMoveLessonAddPage'])
 
+const memberInfo = useMemberInfo().getMemberInfo()
 
 </script>
 

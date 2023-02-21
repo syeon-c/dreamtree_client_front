@@ -6,33 +6,48 @@
       rail
     >
       <v-list
+        v-if="memberInfo.id"
         density="compact"
         nav
       >
-        <v-list-item>
-        <v-avatar>
-          <v-img
-            src="https://cdn.vuetifyjs.com/images/john.jpg"
-            alt="John"
-          ></v-img>
-        </v-avatar>
-        </v-list-item>
-
         <v-list-item
-          prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg"
-          title="Sandra Adams"
-          subtitle="sandra_a88@gmail.com"
+          :prepend-avatar="getPersonImageUrl(member.profileImgUrl)"
+          :title="member.nickname"
+          :subtitle="member.email"
         ></v-list-item>
 
         <v-list-item
           prepend-icon="fa-solid fa-user"
           title="My Page"
-          @click="onClickMoveMyPage"
+          @click="() => movePage('MyPage')"
         ></v-list-item>
 
         <v-list-item
           prepend-icon="fa-solid fa-envelope"
           title="Mailbox"
+          @click="() => movePage('StudentMailPage')"
+        ></v-list-item>
+
+        <v-list-item
+          prepend-icon="fa-solid fa-right-from-bracket"
+          title="Logout"
+        ></v-list-item>
+
+      </v-list>
+
+      <v-list
+        v-if="!memberInfo.id"
+        density="compact"
+        nav
+      >
+        <v-list-item
+          prepend-icon="fa-solid fa-key"
+          title="로그인"
+        ></v-list-item>
+
+        <v-list-item
+          prepend-icon="fa-solid fa-user-plus"
+          title="회원가입"
         ></v-list-item>
 
       </v-list>
@@ -59,7 +74,7 @@
       >
         <v-icon
           icon="fa-sharp fa-solid fa-house"
-          @click=onClickMoveHome
+          @click="() => movePage(consts.HOME_PAGE)"
         >
         </v-icon>
       </div>
@@ -104,7 +119,7 @@
           rounded="0"
           class="align-self-center me-4"
           height="100%"
-          @click="onClickMoveRequestPage"
+          @click="movePage('RequestListPage')"
         >
           요청
         </v-btn>
@@ -128,9 +143,9 @@
 
         </v-sheet>
         <AddButtonComponent
-          @onClickMoveProgramAddPage="onClickMoveProgramAddPage"
-          @onClickMoveRequestAddPage="onClickMoveRequestAddPage"
-          @onClickMoveLessonAddPage="onClickMoveLessonAddPage"
+          @onClickMoveProgramAddPage="movePage(consts.PROGRAM_ADD_PAGE)"
+          @onClickMoveLessonAddPage="movePage(consts.LESSON_ADD_PAGE)"
+          @onClickMoveRequestAddPage="movePage('RequestAddPage')"
         >
         </AddButtonComponent>
 
@@ -144,20 +159,24 @@
 import {onBeforeMount, ref} from "vue";
 import {useRouter} from "vue-router";
 import AddButtonComponent from "@/components/common/AddButtonComponent.vue";
-import {getHomeCategories} from "@/apis/api";
+import {getLayoutInfo} from "@/apis/api";
 import consts from "@/consts/const";
+import useMemberInfo from "@/store/useMemberInfo";
+import {getPersonImageUrl} from "@/util/imageUrlGetter";
 
 /** 분야 카테고리 **/
 const categories = ref([])
-
+const member = ref({})
 const drawer = ref()
 
 const router = useRouter()
-
+const memberInfo = useMemberInfo().getMemberInfo()
 const fetchCategories = async () => {
-  const data = await getHomeCategories();
+  const data = await getLayoutInfo(memberInfo.id, memberInfo.role);
 
-  categories.value = data
+  categories.value = data.categories
+  member.value = data.memberDTO
+  console.log(data)
 }
 
 onBeforeMount(() => {
@@ -165,31 +184,8 @@ onBeforeMount(() => {
 })
 
 
-/** 클릭시 HomePage 이동 **/
-const onClickMoveHome = async () => {
-
-  console.log("Move to HomePage...")
-
-  await router.push( { name: 'HomePage'})
-
-}
-
-/** 클릭시 MyPage 이동 **/
-const onClickMoveMyPage = async () => {
-
-  console.log("Move to MyPage...")
-
-  await router.push( { name: 'MyPage'})
-
-}
-
-/** 클릭시 RequestListPage 이동 **/
-const onClickMoveRequestPage = async () => {
-
-  console.log("Move to Request Page...")
-
-  await router.push( { name: 'RequestListPage'})
-
+const movePage = (page) => {
+  router.push({name: page})
 }
 
 /** 클릭시 ProgramListPage 이동 **/
@@ -200,23 +196,6 @@ const onClickSubCategory = async (subCategoryId) => {
       subCategoryId: subCategoryId
     }
   })
-}
-
-const onClickMoveProgramAddPage = async () => {
-  await router.push({
-    name:consts.PROGRAM_ADD_PAGE
-  })
-}
-const onClickMoveLessonAddPage = async () => {
-  await router.push({
-    name:consts.LESSON_ADD_PAGE
-  })
-}
-
-const onClickMoveRequestAddPage = async () => {
-
-  await router.push( { name: 'RequestAddPage' })
-
 }
 
 </script>

@@ -8,7 +8,7 @@ const useMemberInfo = defineStore('useMemberInfo',() => {
 
   const getMemberInfo = () => {
     memberInfo.value.id = 1
-    memberInfo.value.role = consts.STUDENT
+    memberInfo.value.role = consts.ADMIN
     return memberInfo.value
   }
 
