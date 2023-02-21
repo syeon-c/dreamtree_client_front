@@ -17,7 +17,7 @@
       </div>
       <v-btn
         @click="() => emits('clickSearch', searchOptions)"
-        append-icon="fa-sharp fa-solid fa-magnifying-glass" variant="plain">
+        append-icon="fa-solid fa-magnifying-glass" variant="plain">
         search
       </v-btn>
     </v-card>

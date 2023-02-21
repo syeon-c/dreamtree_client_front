@@ -6,7 +6,7 @@
         style="max-width: 15%"
         v-model="selectSearchKeyword.condition"
         label="검색조건"
-        :items="['total', 'nickname', 'email', 'authState']"
+        :items="props.conditions"
       ></v-select>
       <v-text-field
         style="max-width: 60%"
@@ -18,7 +18,7 @@
       <div class="searchBtn">
         <v-btn
           @click="() => emits('clickSearch', selectSearchKeyword)"
-          append-icon="mdi-magnify">
+          append-icon="fa-solid fa-magnifying-glass" variant="plain">
           search
         </v-btn>
       </div>
@@ -32,14 +32,18 @@
 import {ref} from "vue";
 
 const emits = defineEmits(['clickSearch'])
+const props = defineProps(['conditions'])
+
+const studentSearchConditionList = ['total', 'nickname', 'email', 'authState']
 
 const selectSearchKeyword = ref({keyword: '', condition: 'total'})
 
 
+
 </script>
 
-<style scoped>
 
+<style scoped>
 
 .container {
   display: flex;

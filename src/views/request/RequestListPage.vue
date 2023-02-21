@@ -1,5 +1,6 @@
 <template>
   <DefaultLayout>
+    <SearchComponent :conditions="conditions" @clickSearch="clickSearch" />
 
     <RequestListComponent
       @movePage="movePage"
@@ -19,6 +20,7 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import RequestListComponent from "@/components/request/RequestListComponent.vue";
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
+import SearchComponent from "@/components/common/SearchComponent.vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -29,7 +31,19 @@ const componentKey = ref(0)
 const pNum = ref(route.query.page || 1)
 const pSize = ref(route.query.size || 10)
 
+const conditions = ref(['total', 'title', 'nickname', 'subCategory', 'category'])
 const searchCondition = ref({ keyword: '', condition: ''})
+
+const clickSearch = (emittedSearchKeyword) => {
+
+  searchCondition.value.condition = emittedSearchKeyword.condition
+  searchCondition.value.keyword = emittedSearchKeyword.keyword
+
+  console.log("Searching....")
+
+  componentKey.value++
+
+}
 
 const movePage = (pageNum) => {
 

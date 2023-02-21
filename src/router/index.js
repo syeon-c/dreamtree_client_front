@@ -31,6 +31,11 @@ const routes = [
         name: 'ParentInfoPage',
         component: () => import('@/views/parents/ParentInfoPage.vue'),
       },
+      {
+        path: 'progress/:id',
+        name: 'ProgressListPage',
+        component: () => import('@/views/parents/ProgressListPage.vue'),
+      },
     ]
   },
   {
@@ -121,6 +126,11 @@ const routes = [
         name: 'RequestAddPage',
         component: () => import('@/views/request/RequestAddPage.vue')
       },
+      {
+        path: 'modify/:id',
+        name: 'RequestModifyPage',
+        component: () => import('@/views/request/RequestAddPage.vue')
+      },
 
     ]
   },
@@ -156,7 +166,12 @@ const routes = [
     path: '/infoModify/:id',
     name: 'InfoModifyPage',
     component: () => import('@/views/InfoModifyPage.vue'),
-  }
+  },
+  {
+    path: '/kakaologin',
+    name: 'InfoModifyPage',
+    component: () => import('@/views/KakaoLoginPage.vue'),
+  },
 ]
 
 const router = createRouter({

@@ -6,6 +6,7 @@
     <v-list-item
       prepend-icon="fa-solid fa-caret-right"
       title="수강 프로그램 조회"
+      @click="() => emits(`onClickMoveProgressList`, id)"
     ></v-list-item>
 
     <v-divider/>
@@ -28,7 +29,7 @@
 
 <script setup>
 
-const emits = defineEmits(['onClickMoveInfo'])
+const emits = defineEmits(['onClickMoveInfo', 'onClickMoveProgressList'])
 const id = 13
 
 </script>

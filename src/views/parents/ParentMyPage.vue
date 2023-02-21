@@ -3,6 +3,7 @@
 
       <ParentMyPageComponent
         @onClickMoveInfo="moveParentInfoPage"
+        @onClickMoveProgressList="moveProgressListPage"
       />
 
     </DefaultLayout>
@@ -21,6 +22,12 @@ const moveParentInfoPage = (id) => {
   console.log("Move to Parent MyPage...")
 
   router.push( { name: 'ParentInfoPage', params: {id: id} })
+
+}
+
+const moveProgressListPage = (id) => {
+
+  router.push({ name: 'ProgressListPage', params: {id: id}})
 
 }
 

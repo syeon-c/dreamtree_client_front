@@ -3,9 +3,11 @@
 
     <RequestDetailComponent
       :id="id"
+      @moveModifyPage="moveModifyPage"
+      @moveListPage="moveListPage"
+      @moveParentInfoPage="moveParentInfoPage"
     />
 
-    <ModifyButtonComponent />
   </DefaultLayout>
 
 </template>
@@ -14,11 +16,29 @@
 
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import RequestDetailComponent from "@/components/request/RequestDetailComponent.vue";
-import {useRoute} from "vue-router";
-import ModifyButtonComponent from "@/components/common/ModifyButtonComponent.vue";
+import {useRoute, useRouter} from "vue-router";
 
 const route = useRoute()
+const router = useRouter()
 const id = route.params.id
+
+const moveModifyPage = (id) => {
+
+  router.push({ name: 'RequestModifyPage', params: {id: id}})
+
+}
+
+const moveListPage = () => {
+
+  router.push({ name: 'RequestListPage' })
+
+}
+
+const moveParentInfoPage = (id) => {
+
+  router.push({ name: 'ParentInfoPage', params: {id: id} })
+
+}
 
 </script>
 
