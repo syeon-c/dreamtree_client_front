@@ -146,7 +146,12 @@ const routes = [
     path: '/infoModify/:id',
     name: 'InfoModifyPage',
     component: () => import('@/views/InfoModifyPage.vue'),
-  }
+  },
+  {
+    path: '/kakaologin',
+    name: 'InfoModifyPage',
+    component: () => import('@/views/KakaoLoginPage.vue'),
+  },
 ]
 
 const router = createRouter({

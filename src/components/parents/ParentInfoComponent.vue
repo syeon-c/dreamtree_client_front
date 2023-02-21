@@ -54,7 +54,7 @@
         style="margin-right: 50px"
       >
         <v-card-subtitle>BIRTH</v-card-subtitle>
-        <v-text>{{ info.birth }}</v-text>
+        <v-text>{{ setLocalDateString(info.birth) }}</v-text>
       </div>
     </v-list-item>
 
@@ -81,6 +81,14 @@ const fetchGetInfo = async () => {
 onMounted(() => {
   fetchGetInfo()
 })
+
+// 날짜 yyyy.MM.DD 변환 함수
+const setLocalDateString = (str) => {
+
+  const date = new Date(str)
+  return date.toLocaleDateString()
+
+}
 
 
 </script>

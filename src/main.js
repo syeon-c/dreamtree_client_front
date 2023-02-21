@@ -21,4 +21,6 @@ const app = createApp(App)
 
 registerPlugins(app)
 
+window.Kakao.init("e56cba4e052f889b4c371c2bb851820d");
+
 app.mount('#app')
