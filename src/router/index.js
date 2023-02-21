@@ -36,6 +36,11 @@ const routes = [
         name: 'ProgressListPage',
         component: () => import('@/views/parents/ProgressListPage.vue'),
       },
+      {
+        path: 'attendance',
+        name: consts.MY_ATTENDANCE_PAGE,
+        component: () => import('@/views/attendance/MyAttendencePage.vue'),
+      },
     ]
   },
   {

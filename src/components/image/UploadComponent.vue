@@ -24,22 +24,11 @@
           </template>
         </template>
       </v-file-input>
-
         <div style="display: flex; justify-content: center">
-          <v-card-actions>
-            <v-btn
-              color="primary"
-              @click="onClickUpload"
-              block
-            >확인</v-btn>
-          </v-card-actions>
-          <v-card-actions>
-            <v-btn
-              color="primary"
-              block
-              @click="onClickCancel"
-            >취소</v-btn>
-          </v-card-actions>
+          <CreateButtonComponent
+            @onClickSave="onClickUpload"
+            @onClickCancel="onClickCancel"
+          ></CreateButtonComponent>
         </div>
     </v-card-text>
   </v-card>
@@ -50,6 +39,7 @@
 
 import {ref} from "vue";
 import {postUpload} from "@/apis/api";
+import CreateButtonComponent from "@/components/util/CreateButtonComponent.vue";
 
 const emits = defineEmits(['addImages', 'offDialog'])
 

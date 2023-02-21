@@ -1,9 +1,9 @@
 <template>
   <DefaultLayout>
+    <!--카테고리-->
     <v-container class="form-container">
-      <div>
-        <form>
-
+      <v-row>
+        <v-col>
           <div style="display: flex">
             <MainCategoryComponent
               @mainCategoryChange="mainCategoryChange"
@@ -13,60 +13,71 @@
               @updateSubCategory="onUpdateSubCategory"
             ></SubCategoryComponent>
           </div>
+        </v-col>
+      </v-row>
 
+      <!--입력폼-->
+      <v-row>
+        <v-col>
           <v-text-field
-            class="mr-0 ml-0 mt-3 form-item"
             v-model="programForm.title"
             label="제목"
 
           ></v-text-field>
 
           <v-textarea
-            class="mr-0 ml-0 form-item"
             v-model="programForm.content"
           ></v-textarea>
 
           <v-text-field
-            class="mr-0 ml-0"
+            type="number"
             v-model="programForm.fee"
             label="가격"
           ></v-text-field>
 
-        </form>
+        </v-col>
+      </v-row>
 
-        <div>
+      <!--커리큘럼-->
+      <v-row>
+        <v-col>
           회차별 수업 정보
-          <v-btn
-            icon="fa-solid fa-plus"
-            @click="generateCurriculum"
-          >
-          </v-btn>
-        </div>
-
-        <div
-          v-for="(dayCurriculum, index) in mainCurriculum"
-          :key="index"
-        >
+        </v-col>
+      </v-row>
+      <v-row
+        v-for="(dayCurriculum, index) in mainCurriculum"
+        :key="index"
+      >
+        <v-col>
           <ProgramCurriculumDayComponent
             :key="count"
             :dayCurriculum="dayCurriculum"
             :readMode="false"
+            :times="index"
             @pushCurriculum="(curriculum) => updateCurriculum(curriculum, index)"
             @deleteDayCurriculum="() => deleteDayCurriculum(index)"
           ></ProgramCurriculumDayComponent>
+        </v-col>
+      </v-row>
 
-        </div>
+      <v-row justify="center">
+        <v-btn
+          icon="fa-solid fa-plus"
+          @click="generateCurriculum"
+        >
+        </v-btn>
+      </v-row>
 
-        <!--이미지 업로드-->
-        <div>
+      <!--이미지 업로드-->
+      <v-row>
+        <v-col>
           <v-btn
             prepend-icon="fa-solid fa-floppy-disk"
             @click="onClickUploadButton"
           >
             Upload
           </v-btn>
-        </div>
-
+        </v-col>
         <div class="text-center">
           <v-dialog
             v-model="uploadDialog"
@@ -74,31 +85,25 @@
             <UploadComponent @addImages="addImages" @offDialog="uploadDialog = false"/>
           </v-dialog>
         </div>
+      </v-row>
 
+      <v-row>
         <ProgramImageListComponent
           :imageNameList="imageNameList"
           :key="imageListKey"
           @onImageDeleted="onImageDeleted"
         ></ProgramImageListComponent>
+      </v-row>
 
-        <!--생성 버튼-->
-        <div class="addCancel">
-          <v-btn
-            color="success"
-            class="me-2"
-            @click="saveProgramForm"
-          >
-            저장
-          </v-btn>
-          <v-btn
-            color="success"
-            class="me-4"
-            @click="cancelProgramForm"
-          >
-            취소
-          </v-btn>
-        </div>
-      </div>
+      <!--생성 버튼-->
+      <v-row>
+        <v-col>
+          <CreateButtonComponent
+            @onClickSave="saveProgramForm"
+            @onClickCancel="cancelProgramForm"
+          ></CreateButtonComponent>
+        </v-col>
+      </v-row>
     </v-container>
   </DefaultLayout>
 </template>
@@ -114,6 +119,8 @@ import UploadComponent from "@/components/image/UploadComponent.vue";
 import ProgramImageListComponent from "@/components/image/ImageListComponent.vue";
 import {useRouter} from "vue-router";
 import consts from "@/consts/const";
+import CreateButtonComponent from "@/components/util/CreateButtonComponent.vue";
+import useMemberInfo from "@/store/useMemberInfo";
 
 const router = useRouter()
 //ref
@@ -124,6 +131,7 @@ const subCategoryList = ref({})
 const uploadDialog = ref(false)
 const imageNameList = ref([])
 const imageListKey = ref(0)
+
 
 //첨부파일 dialog
 const onClickUploadButton = () => {
@@ -157,6 +165,7 @@ const mainCategoryChange = (categoryList) => {
 }
 
 
+/*커리큘럼*/
 
 //회차 업데이트
 const updateCurriculum = (curriculum, index) => {
@@ -186,9 +195,18 @@ const saveProgramForm = async () => {
     fileForms.push(item)
   })
   programForm.value.fileForms = fileForms
-  const studentId = 1
-  console.log(studentId, mainCurriculum.value, programForm.value)
-  const data = await postProgramForm(studentId, mainCurriculum.value, programForm.value)
+
+  const { getMemberInfo } = useMemberInfo()
+  const studentId = getMemberInfo().id
+
+  const programFormDTO = {
+    ...programForm.value,
+    studentId: studentId,
+    curriculumJson: JSON.stringify(mainCurriculum.value),
+  }
+  console.log(programFormDTO)
+
+  const data = await postProgramForm(programFormDTO)
   await router.push({
     name: consts.PROGRAM_DETAIL_PAGE,
     params: {
@@ -209,11 +227,6 @@ const cancelProgramForm = async () => {
 </script>
 
 <style scoped>
-.form-container{
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
 .form-item{
   width: 90vw;
 }

@@ -14,11 +14,13 @@ import { createApp } from 'vue'
 import { registerPlugins } from '@/plugins'
 import VueWordCloud from "vuewordcloud";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import VueDatePicker from "@vuepic/vue-datepicker"
+import '@vuepic/vue-datepicker/dist/main.css'
 
 const app = createApp(App)
   .component(VueWordCloud.name, VueWordCloud)
   .component('font-awesome-icon', FontAwesomeIcon)
-
+  .component('VueDatePicker', VueDatePicker)
 registerPlugins(app)
 
 window.Kakao.init("e56cba4e052f889b4c371c2bb851820d");

@@ -13,6 +13,7 @@
       class="cube2"
       size="large"
       icon="fa-solid fa-plus"
+      @click="emits('onClickMoveLessonAddPage')"
     ></v-btn>
     <v-btn
       class="cube3"
@@ -26,7 +27,7 @@
 </template>
 
 <script setup>
-const emits = defineEmits(['onClickMoveProgramAddPage', 'onClickMoveRequestAddPage'])
+const emits = defineEmits(['onClickMoveProgramAddPage', 'onClickMoveRequestAddPage', 'onClickMoveLessonAddPage'])
 
 
 </script>
