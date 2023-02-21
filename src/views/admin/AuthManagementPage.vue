@@ -89,6 +89,8 @@ const moveCollegePageNum = (pageNum) => {
 // 학교 조회
 const moveCollegeAuthInfo = (id) => {
 
+  console.log("student id: ", id)
+
   router.push({ name: "CollegeAuthInfoPage",
     query: {
       id: id,

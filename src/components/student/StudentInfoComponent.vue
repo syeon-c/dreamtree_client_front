@@ -1,0 +1,219 @@
+<template>
+  <v-list lines="two">
+
+    <v-list-subheader>Parent Info</v-list-subheader>
+
+    <!--회원 프로필 이미지 & 닉네임-->
+    <v-list-item>
+      <div class="d-flex flex-no-wrap justify-center">
+        <v-avatar
+          style="margin-left: 20px"
+          class="ma-1"
+          size="250"
+          rounded="10"
+        >
+          <v-img
+            src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
+          ></v-img>
+        </v-avatar>
+
+        <v-card-title
+        >
+          {{ student.nickname }}
+        </v-card-title>
+
+        <v-btn
+          flat
+          color="grey"
+          size="small"
+          icon="fa-solid fa-pen"
+          @click="() => emits('moveModify')"
+        ></v-btn>
+      </div>
+    </v-list-item>
+
+    <v-divider/>
+
+    <!--회원 이메일-->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>EMAIL</v-card-subtitle>
+        <v-text>{{ student.email }}</v-text>
+      </div>
+    </v-list-item>
+
+    <v-divider/>
+
+    <!--회원 생년월일-->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>BIRTH</v-card-subtitle>
+        <v-text>{{ student.birth }}</v-text>
+      </div>
+    </v-list-item>
+
+    <!--회원 성별-->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>GENDER</v-card-subtitle>
+        <v-text>{{ student.gender }}</v-text>
+      </div>
+    </v-list-item>
+
+    <!--회원 대학-->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>COLLEGE</v-card-subtitle>
+        <v-text>
+          {{ student.college }}
+          <span style="position: absolute; right: 20%; background-color: pink; border-radius: 10px; padding: 5px">
+            {{student.authState == 'yes' ? '인증' : student.authState == 'pending' ? '요청 중' : '승인 거절'}}
+          </span></v-text>
+      </div>
+    </v-list-item>
+
+    <!--회원 전공-->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>MAJOR</v-card-subtitle>
+        <v-text>{{ student.major }}</v-text>
+      </div>
+    </v-list-item>
+  </v-list>
+
+  <v-btn @click="dialog = !dialog">인증요청</v-btn>
+
+  <!-- post dialog -->
+  <v-dialog v-model="dialog">
+
+    <v-card>
+      <v-card-text style="text-align: center">
+        <div class="v-container">
+          <v-sheet width="300" class="mx-auto">
+            <v-form fast-fail @submit.prevent>
+              <v-text-field
+                v-model="addCollegeInfo.college"
+                label="대학교"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="addCollegeInfo.major"
+                label="전공"
+              ></v-text-field>
+
+              <div>
+                인증파일
+                <v-btn
+                  prepend-icon="fa-solid fa-floppy-disk"
+                  @click="onClickUploadButton"
+                >
+                  Upload
+                </v-btn>
+              </div>
+
+              <div class="text-center">
+                <v-dialog
+                  v-model="uploadDialog"
+                >
+                  <UploadComponent @addImages="addImages" @offDialog="uploadDialog = false"/>
+                </v-dialog>
+              </div>
+            </v-form>
+          </v-sheet>
+        </div>
+      </v-card-text>
+      <v-card-actions class="justify-center">
+        <v-btn color="grey" @click="addClickCollege"> 전송</v-btn>
+        <v-btn color="grey" @click="dialog = false"> 취소</v-btn>
+      </v-card-actions>
+    </v-card>
+
+  </v-dialog>
+</template>
+
+<script setup>
+
+import {addCertificate, getStudentInfo} from "@/apis/adminAPIS";
+import {onMounted, ref} from "vue";
+import {authCollege} from "@/apis/StudentAPIS";
+import UploadComponent from "@/components/image/UploadComponent.vue";
+
+const props = defineProps(['id'])
+
+const emits = defineEmits(['moveModify'])
+
+const student = ref({})
+
+const dialog = ref(false)
+
+const addCollegeInfo = ref({})
+
+const uploadDialog = ref(false)
+
+const imageListKey = ref(0)
+
+const imageNameList = ref([])
+
+// Dialog에서 전송 클릭 시
+const addClickCollege = async () => {
+
+  const college = {
+    studentId: props.id,
+    college: addCollegeInfo.value.college,
+    major: addCollegeInfo.value.major,
+    url: imageNameList.value[0]
+  }
+
+  await authCollege(college)
+
+  // 변경 된 내용 다시 화면에 보여지게
+  await fetchGetInfo()
+
+  dialog.value = !dialog.value
+}
+
+
+const addImages = (imageNames) => {
+  console.log(imageNames)
+  imageNameList.value.push(...imageNames)
+  imageListKey.value++
+}
+
+const onClickUploadButton = () => {
+  uploadDialog.value = true
+}
+
+
+const fetchGetInfo = async () => {
+
+  student.value = await getStudentInfo(props.id);
+
+  console.log("Student: ", student.value)
+
+}
+
+onMounted(() => {
+  fetchGetInfo()
+})
+
+
+</script>
+
+<style scoped>
+
+</style>

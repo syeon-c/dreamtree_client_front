@@ -66,9 +66,7 @@ const movePageNum = (pageNum) => {
 
 const moveStudentInfo = (id) => {
 
-  console.log("info")
-
-  router.push({ name: "StudentInfoPage",
+  router.push({ name: "AdminStudentInfoPage",
     query: {
       id: id,
       page: pNum.value,

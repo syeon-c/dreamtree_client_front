@@ -1,0 +1,87 @@
+<template>
+
+  <v-btn @click="dialog = !dialog">메일쓰기</v-btn>
+
+  <!-- post dialog -->
+  <v-dialog v-model="dialog">
+
+    <v-card>
+      <v-card-text style="text-align: center">
+        <div class="v-container">
+          <v-form>
+            <v-container style="margin: 10px" >
+
+              <v-text-field
+                v-model="addMail.toEmail"
+                label="보내는 사람: fuck22@gmail.com"
+                value="fuck22@gmail.com"
+                type="hidden"
+                variant="outlined"
+                style="margin-bottom: 5%"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="addMail.fromEmail"
+                label="보낼 사람 (abcd123@gmail.com)"
+                variant="outlined"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="addMail.title"
+                label="제목 입력"
+                variant="outlined"
+              ></v-text-field>
+
+              <v-text-field
+                v-model="addMail.content"
+                label="내용 입력"
+                variant="outlined"
+              ></v-text-field>
+            </v-container>
+          </v-form>
+        </div>
+      </v-card-text>
+      <v-card-actions class="justify-center">
+        <v-btn color="grey" @click="accept"> 전송</v-btn>
+        <v-btn color="grey" @click="dialog = false"> 취소</v-btn>
+      </v-card-actions>
+    </v-card>
+
+  </v-dialog>
+
+</template>
+
+<script setup>
+
+import {ref} from "vue";
+
+const emits = defineEmits(['postMail'])
+
+const addMail = ref({
+  toEmail: 'fuck22@gmail.com',
+  fromEmail: '',
+  title: '',
+  content: ''
+})
+
+const dialog = ref(false)
+
+const accept = () => {
+
+  emits('postMail', addMail.value)
+
+  dialog.value = !dialog.value
+
+  addMail.value = {
+    toEmail: 'fuck22@gmail.com',
+    fromEmail: '',
+    title: '',
+    content: ''
+  }
+}
+
+</script>
+
+<style scoped>
+
+</style>

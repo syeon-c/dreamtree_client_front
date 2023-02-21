@@ -14,6 +14,7 @@ import {useRouter} from "vue-router";
 
 const router = useRouter()
 
+// 페이지 이동
 const movePage = (page) => {
 
   router.push({name: page})

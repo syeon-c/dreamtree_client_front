@@ -1,18 +1,40 @@
 <template>
 
-  <v-list lines="one">
+  <v-list lines="three">
+
+    <v-list-subheader>Student Admin</v-list-subheader>
+
+    <v-list-subheader
+      style="float: right;"
+      @click="() => emits('moveAuthManagementPage')"
+    >{{authCount}}인증 요청>></v-list-subheader>
+
     <v-list-item
       v-for="student in students"
-      :key="student.email"
+      :key="student.studentId"
+      @click="() => emits('moveStudentInfo', student.studentId)"
     >
-      <div>
-      {{student.nickname}} <br>
-      {{student.email}}
-        <span style="margin: 30px">{{student.authState}}</span>
-        <span style="float: right" @click="() => emits('moveStudentInfo', student.studentId)">상세</span>
+      <div class="d-flex flex-nowrap justify-space-between">
+        <div class="d-flex flex-no-wrap ma-1">
+          <v-avatar size="70px">
+            <v-img src="https://randomuser.me/api/portraits/women/79.jpg"/>
+          </v-avatar>
+
+          <div style="margin-left: 15px;">
+            <v-list-item-title v-text="student.email"></v-list-item-title>
+            <div class="d-flex flex-no-wrap">
+              <v-list-subheader> {{student.nickname}}</v-list-subheader>
+              <v-list-subheader> {{student.birth}} </v-list-subheader>
+            </div>
+          </div>
+        </div>
+
+        <v-list-item-title>{{student.password}}</v-list-item-title>
       </div>
     </v-list-item>
+
   </v-list>
+
 
   <div>
     <v-pagination
@@ -28,11 +50,11 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
-import {getStudentLists} from "@/apis/adminAPIS";
+import {getAuthCount, getStudentLists} from "@/apis/adminAPIS";
 
 const props = defineProps(['searchKeyword', 'pSize', 'pNum'])
 
-const emits = defineEmits(['movePageNum', 'moveStudentInfo'])
+const emits = defineEmits(['movePageNum', 'moveStudentInfo', 'moveAuthManagementPage'])
 
 const pageNum = ref(1)
 
@@ -40,19 +62,25 @@ const totalPageSize = ref()
 
 const students = ref([])
 
+const authCount = ref(0)
+
 const fetchGetList = async () => {
 
   pageNum.value = parseInt(props.pNum)
+
+  props.searchKeyword.condition = 'total'
 
   const data = await getStudentLists(props.searchKeyword, pageNum.value, props.pSize);
 
   console.log(data)
 
-  console.log(Math.ceil(data.total/10))
-
   students.value = data.dtoList
 
-  totalPageSize.value = Math.ceil(data.total/10)
+  authCount.value = await getAuthCount()
+
+  console.log("authCount: ", authCount.value)
+
+  totalPageSize.value = Math.ceil(data.total / props.pSize)
 }
 
 onMounted(() => {

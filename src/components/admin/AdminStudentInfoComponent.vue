@@ -6,7 +6,7 @@
 
     <!--회원 프로필 이미지 & 닉네임-->
     <v-list-item>
-      <div class="d-flex flex-no-wrap justify-center" >
+      <div class="d-flex flex-no-wrap justify-center">
         <v-avatar
           style="margin-left: 20px"
           class="ma-1"
@@ -20,7 +20,7 @@
 
         <v-card-title
         >
-          {{ info.nickname }}
+          {{ student.nickname }}
         </v-card-title>
 
         <v-btn
@@ -28,7 +28,7 @@
           color="grey"
           size="small"
           icon="fa-solid fa-pen"
-          @click="() => emits(`onClickMoveInfoModifyPage`, id)"
+          @click="() => emits('moveModify')"
         ></v-btn>
       </div>
     </v-list-item>
@@ -42,7 +42,7 @@
         style="margin-right: 50px"
       >
         <v-card-subtitle>EMAIL</v-card-subtitle>
-        <v-text>{{ info.email }}</v-text>
+        <v-text>{{ student.email }}</v-text>
       </div>
     </v-list-item>
 
@@ -55,40 +55,61 @@
         style="margin-right: 50px"
       >
         <v-card-subtitle>BIRTH</v-card-subtitle>
-        <v-text>{{ info.birth }}</v-text>
+        <v-text>{{ student.birth }}</v-text>
       </div>
     </v-list-item>
 
+    <!--회원 성별-->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>GENDER</v-card-subtitle>
+        <v-text>{{ student.gender }}</v-text>
+      </div>
+    </v-list-item>
+
+    <!--회원 대학-->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>COLLEGE</v-card-subtitle>
+        <v-text>{{ student.college }}</v-text>
+      </div>
+    </v-list-item>
+
+    <!--회원 전공-->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>MAJOR</v-card-subtitle>
+        <v-text>{{ student.major }}</v-text>
+      </div>
+    </v-list-item>
   </v-list>
 
-  이미지: {{student.profileImgUrl}} <br>
-  인증상태: {{student.authState}} <br>
-  이메일: {{student.email}} <br>
-  닉네임: {{student.nickname}} <br>
-  생년월일: {{student.birth}} <br>
-  성별: {{student.gender}} <br>
-  대학: {{student.college}} <br>
-  전공: {{student.major}} <br>
-  자격증: <br>
-  <br>
+  <!-- 회원 자격증 -->
   <v-table>
     <thead>
-      <tr>
-        <th>자격증명</th>
-        <th>취득일자</th>
-        <th>인증상태</th>
-      </tr>
+    <tr>
+      <th>자격증명</th>
+      <th>취득일자</th>
+      <th>인증상태</th>
+    </tr>
     </thead>
     <tbody>
-      <tr v-for="certificate in student.certificateList">
-        <td>{{certificate.name}}</td>
-        <td>{{certificate.aquireDate}}</td>
-        <td>{{certificate.authState}}</td>
-      </tr>
+    <tr v-for="certificate in student.certificateList">
+      <td>{{ certificate.name }}</td>
+      <td>{{ certificate.aquireDate }}</td>
+      <td>{{ certificate.authState }}</td>
+    </tr>
     </tbody>
   </v-table>
-
-  <v-btn @click="() => emits('moveModify')">수정</v-btn>
   <v-btn @click="clickRemoveStudent">삭제</v-btn>
 </template>
 

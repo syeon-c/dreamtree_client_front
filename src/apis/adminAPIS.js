@@ -163,6 +163,7 @@ export const modifyCertificateAuthState = async (id, authState) => {
 // 학생 정보 수정
 export const modifyStudent = async (student) => {
 
+  console.log("put Student", student)
   try {
     const res = await axios.put(`${consts.DOMAIN}/api/students/modify`, student)
 
@@ -200,10 +201,23 @@ export const getCertificateList = async (id) => {
   }
 }
 
+// 자격증 추가
 export const addCertificate = async (certificate) => {
 
   try {
     const res = await axios.post(`${consts.DOMAIN}/api/certificate/form`, certificate)
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+
+export const getAuthCount = async () => {
+
+  try {
+    const res = await axios.get(`${consts.DOMAIN}/api/students/authCount`)
 
     return res.data
   } catch (e) {

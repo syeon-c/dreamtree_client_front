@@ -1,9 +1,67 @@
 <template>
 
-  이미지: {{college.authUrl}} <br>
-  대학: {{college.college}} <br>
-  전공: {{college.major}} <br>
-  인증파일: {{college.url}} <br>
+  <v-list lines="two">
+    <v-list-item>
+      <div class="d-flex flex-no-wrap justify-center">
+        <v-avatar
+          style="margin-left: 20px"
+          class="ma-1"
+          size="250"
+          rounded="10"
+        >
+          <v-img
+            src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
+          ></v-img>
+        </v-avatar>
+
+        <v-card-title
+        >
+          {{ college.nickname }}
+        </v-card-title>
+      </div>
+    </v-list-item>
+
+    <v-divider/>
+
+    <!-- 대학 -->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>COLLEGE</v-card-subtitle>
+        <v-text>{{ college.college }}</v-text>
+      </div>
+    </v-list-item>
+
+    <v-divider/>
+
+    <!-- 전공 -->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>MAJOR</v-card-subtitle>
+        <v-text>{{ college.major }}</v-text>
+      </div>
+    </v-list-item>
+
+    <v-divider/>
+
+    <!-- 전공 -->
+    <v-list-item>
+      <div
+        class="d-flex flex-no-wrap justify-md-space-between"
+        style="margin-right: 50px"
+      >
+        <v-card-subtitle>AUTH FILE</v-card-subtitle>
+        <v-text>{{ college.authUrl }}</v-text>
+      </div>
+    </v-list-item>
+
+    <v-divider/>
+  </v-list>
 
   <v-btn @click="() => clickAccept(id, 'yes')">수락</v-btn>
   <v-btn @click="() => clickAccept(id, 'no')">거절</v-btn>

@@ -1,15 +1,31 @@
 <template>
   <h3>대학 인증 요청</h3>
-  <v-list lines="one">
+
+  <v-list lines="three">
+
+    <v-list-subheader>College Auth Request</v-list-subheader>
+
     <v-list-item
       v-for="auth in collegeAuthRequests"
-      :key="auth.email"
+      :key="auth.studentId"
+      @click="() => emits('moveCollegeAuthInfo', auth.id)"
     >
-      <div>
-        {{auth.nickname}} <br>
-        {{auth.email}}
-        <span style="margin: 30px">{{auth.authRequest}}</span>
-        <span style="float: right" @click="() => emits('moveCollegeAuthInfo', auth.id)">상세</span>
+      <div class="d-flex flex-nowrap justify-space-between">
+        <div class="d-flex flex-no-wrap ma-1">
+          <v-avatar size="70px">
+            <v-img src="https://randomuser.me/api/portraits/women/79.jpg"/>
+          </v-avatar>
+
+          <div style="margin-left: 15px;">
+            <v-list-item-title v-text="auth.email"></v-list-item-title>
+            <div class="d-flex flex-no-wrap">
+              <v-list-subheader> {{ auth.nickname }}</v-list-subheader>
+              <v-list-subheader> {{ auth.birth }}</v-list-subheader>
+            </div>
+          </div>
+        </div>
+
+        <v-list-item-title>{{ auth.password }}</v-list-item-title>
       </div>
     </v-list-item>
   </v-list>
@@ -32,7 +48,7 @@ import {getStudentCollegeAuthLists} from "@/apis/adminAPIS";
 
 const props = defineProps(['searchKeyword', 'pSize', 'pNum'])
 
-const emits = defineEmits(['movePageNum', 'moveCollegeAuthInfo', 'moveCertificateAuthInfo'])
+const emits = defineEmits(['movePageNum', 'moveCollegeAuthInfo'])
 
 const pageNum = ref(1)
 

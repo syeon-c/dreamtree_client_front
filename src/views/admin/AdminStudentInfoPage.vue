@@ -1,20 +1,17 @@
 <template>
 
-  <default-layout>
-    <StudentInfoComponent
-      @moveModify="moveModify"
-      @moveMemberManagement="moveMemberManagement"
-      :id="studentId"
-    />
-  </default-layout>
+  <StudentInfoComponent
+    @moveModify="moveModify"
+    @moveMemberManagement="moveMemberManagement"
+    :id="studentId"
+  />
 
 </template>
 
 <script setup>
 
-import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import StudentInfoComponent from "@/components/admin/StudentInfoComponent.vue";
 import {useRoute, useRouter} from "vue-router";
+import StudentInfoComponent from "@/components/admin/AdminStudentInfoComponent.vue";
 
 const router = useRouter()
 
@@ -33,7 +30,6 @@ const moveMemberManagement = () => {
 
   router.push({name: 'MemberManagementPage'})
 }
-
 </script>
 
 <style scoped>
