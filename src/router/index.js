@@ -31,6 +31,11 @@ const routes = [
         name: 'ParentInfoPage',
         component: () => import('@/views/parents/ParentInfoPage.vue'),
       },
+      {
+        path: 'attendance',
+        name: consts.MY_ATTENDANCE_PAGE,
+        component: () => import('@/views/attendance/MyAttendencePage.vue'),
+      },
     ]
   },
   {

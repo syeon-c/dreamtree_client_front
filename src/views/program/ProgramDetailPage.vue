@@ -105,6 +105,7 @@ import consts from "@/consts/const";
 import LessonStudentInfoComponent from "@/components/lesson/LessonStudentInfoComponent.vue";
 import LessonInfoComponent from "@/components/lesson/LessonInfoComponent.vue";
 import LessonDetailComponent from "@/components/lesson/LessonDetailComponent.vue";
+import useMemberInfo from "@/store/useMemberInfo";
 
 
 const programDetailInfo = ref({})
@@ -129,6 +130,11 @@ const fetchProgramDetailInfo = async () => {
   programDetailInfo.value = data
 
 }
+
+const { getMemberInfo } = useMemberInfo()
+const studentId = getMemberInfo().id
+
+console.log(studentId)
 
 onMounted(() => {
   fetchProgramDetailInfo()

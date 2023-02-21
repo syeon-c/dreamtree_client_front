@@ -16,7 +16,7 @@
       <v-row>
         <v-col>
           레슨기간 설정
-          <VueDatePicker v-model="lessonForm.date" range multi-calendars placeholder="레슨기간을 설정하십시오"/>
+          <VueDatePicker v-model="lessonForm.date" range placeholder="레슨기간을 설정하십시오"/>
         </v-col>
       </v-row>
 
@@ -87,7 +87,7 @@
 
       <v-row>
         <v-col>
-          <VueDatePicker v-model="lessonForm.expireDate" range multi-calendars/>
+          <VueDatePicker v-model="lessonForm.expireDate" range/>
         </v-col>
       </v-row>
 
@@ -111,11 +111,10 @@ import CreateButtonComponent from "@/components/util/CreateButtonComponent.vue";
 import {useRouter} from "vue-router";
 import consts from "@/consts/const";
 import {dayToBitParser} from "@/util/dayBitParser";
+import useMemberInfo from "@/store/useMemberInfo";
 
 const router = useRouter()
 
-//todo: studentId store에서 받아오는작업 필요
-const studentId = 1
 const programList = ref([])
 const lessonForm = ref({
   date: [Date.now(), Date.now()],
@@ -138,6 +137,9 @@ const onUpdateProgramSelect = async (obj) => {
 }
 
 const fetchProgramLists = async () => {
+  const { getMemberInfo } = useMemberInfo()
+  const studentId = getMemberInfo().id
+
   const data = await getStudentProgramLists(studentId)
   programList.value = data
 }

@@ -120,6 +120,7 @@ import ProgramImageListComponent from "@/components/image/ImageListComponent.vue
 import {useRouter} from "vue-router";
 import consts from "@/consts/const";
 import CreateButtonComponent from "@/components/util/CreateButtonComponent.vue";
+import useMemberInfo from "@/store/useMemberInfo";
 
 const router = useRouter()
 //ref
@@ -130,6 +131,7 @@ const subCategoryList = ref({})
 const uploadDialog = ref(false)
 const imageNameList = ref([])
 const imageListKey = ref(0)
+
 
 //첨부파일 dialog
 const onClickUploadButton = () => {
@@ -192,7 +194,9 @@ const saveProgramForm = async () => {
     fileForms.push(item)
   })
   programForm.value.fileForms = fileForms
-  const studentId = 1
+
+  const { getMemberInfo } = useMemberInfo()
+  const studentId = getMemberInfo().id
 
   const programFormDTO = {
     ...programForm.value,
