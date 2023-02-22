@@ -15,7 +15,7 @@
           :items="['newest', 'times']"
         ></v-select>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="5">
         <v-text-field
           v-model="searchOptions.keyword"
           label="Search"

@@ -15,7 +15,8 @@ const consts = {
   PROGRAM_DETAIL_PAGE: "ProgramDetailPage",
   LESSON_ADD_PAGE: "LessonAddPage",
   PROGRAM_ADD_PAGE: "ProgramAddPage",
-  MY_ATTENDANCE_PAGE: "MyAttendancePage"
+  MY_ATTENDANCE_PAGE: "MyAttendancePage",
+  STUDENT_INFO_PAGE: "StudentInfoPage"
 }
 
 

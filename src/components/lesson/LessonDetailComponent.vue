@@ -55,6 +55,15 @@
       </v-col>
     </v-row>
 
+    <v-row>
+      <v-col>
+        <v-btn
+          @click="onClickApply"
+        >
+          신청하기
+        </v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -62,6 +71,16 @@
 import {bitToDayParser} from "@/util/dayBitParser";
 
 const props = defineProps(['lessonInfo', 'programTitle']);
+const emits = defineEmits(['paySucceeded'])
+
+/*레슨 신청*/
+const onClickApply = () => {
+  /*todo: 카카오페이 진행 */
+
+  let payInfo = {}
+  /*만약 페이가 정상적으로 완료될 시*/
+  emits('paySucceeded', payInfo)
+}
 </script>
 
 <style scoped>

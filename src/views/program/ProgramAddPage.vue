@@ -1,110 +1,113 @@
 <template>
   <DefaultLayout>
-    <!--카테고리-->
-    <v-container class="form-container">
-      <v-row>
-        <v-col>
-          <div style="display: flex">
-            <MainCategoryComponent
-              @mainCategoryChange="mainCategoryChange"
-            ></MainCategoryComponent>
-            <SubCategoryComponent
-              :subCategoryList="subCategoryList"
-              @updateSubCategory="onUpdateSubCategory"
-            ></SubCategoryComponent>
+    <v-form>
+      <!--카테고리-->
+      <v-container class="form-container">
+          <v-row>
+            <v-col>
+              <div style="display: flex">
+                <MainCategoryComponent
+                  @mainCategoryChange="mainCategoryChange"
+                ></MainCategoryComponent>
+                <SubCategoryComponent
+                  :subCategoryList="subCategoryList"
+                  @updateSubCategory="onUpdateSubCategory"
+                ></SubCategoryComponent>
+              </div>
+            </v-col>
+          </v-row>
+
+          <!--입력폼-->
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="programForm.title"
+                label="제목"
+              ></v-text-field>
+
+              <v-textarea
+                v-model="programForm.content"
+                :rules="[v => !!v]"
+              ></v-textarea>
+
+              <v-text-field
+                type="number"
+                v-model="programForm.fee"
+                label="가격"
+                :rules="[v => !!v]"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <!--커리큘럼-->
+          <v-row>
+            <v-col>
+              회차별 수업 정보
+            </v-col>
+          </v-row>
+          <v-row
+            v-for="(dayCurriculum, index) in mainCurriculum"
+            :key="index"
+          >
+            <v-col>
+              <ProgramCurriculumDayComponent
+                :key="count"
+                :dayCurriculum="dayCurriculum"
+                :readMode="false"
+                :times="index"
+                @pushCurriculum="(curriculum) => updateCurriculum(curriculum, index)"
+                @deleteDayCurriculum="() => deleteDayCurriculum(index)"
+              ></ProgramCurriculumDayComponent>
+            </v-col>
+          </v-row>
+
+          <v-row justify="center">
+            <v-btn
+              icon="fa-solid fa-plus"
+              @click="generateCurriculum"
+            >
+            </v-btn>
+          </v-row>
+
+
+        <!--이미지 업로드-->
+        <v-row>
+          <v-col>
+            <v-btn
+              prepend-icon="fa-solid fa-floppy-disk"
+              @click="onClickUploadButton"
+            >
+              Upload
+            </v-btn>
+          </v-col>
+          <div class="text-center">
+            <v-dialog
+              v-model="uploadDialog"
+            >
+              <UploadComponent @addImages="addImages" @offDialog="uploadDialog = false"/>
+            </v-dialog>
           </div>
-        </v-col>
-      </v-row>
+        </v-row>
 
-      <!--입력폼-->
-      <v-row>
-        <v-col>
-          <v-text-field
-            v-model="programForm.title"
-            label="제목"
+        <v-row>
+          <ProgramImageListComponent
+            :imageNameList="imageNameList"
+            :key="imageListKey"
+            @onImageDeleted="onImageDeleted"
+          ></ProgramImageListComponent>
+        </v-row>
 
-          ></v-text-field>
-
-          <v-textarea
-            v-model="programForm.content"
-          ></v-textarea>
-
-          <v-text-field
-            type="number"
-            v-model="programForm.fee"
-            label="가격"
-          ></v-text-field>
-
-        </v-col>
-      </v-row>
-
-      <!--커리큘럼-->
-      <v-row>
-        <v-col>
-          회차별 수업 정보
-        </v-col>
-      </v-row>
-      <v-row
-        v-for="(dayCurriculum, index) in mainCurriculum"
-        :key="index"
-      >
-        <v-col>
-          <ProgramCurriculumDayComponent
-            :key="count"
-            :dayCurriculum="dayCurriculum"
-            :readMode="false"
-            :times="index"
-            @pushCurriculum="(curriculum) => updateCurriculum(curriculum, index)"
-            @deleteDayCurriculum="() => deleteDayCurriculum(index)"
-          ></ProgramCurriculumDayComponent>
-        </v-col>
-      </v-row>
-
-      <v-row justify="center">
-        <v-btn
-          icon="fa-solid fa-plus"
-          @click="generateCurriculum"
-        >
-        </v-btn>
-      </v-row>
-
-      <!--이미지 업로드-->
-      <v-row>
-        <v-col>
-          <v-btn
-            prepend-icon="fa-solid fa-floppy-disk"
-            @click="onClickUploadButton"
-          >
-            Upload
-          </v-btn>
-        </v-col>
-        <div class="text-center">
-          <v-dialog
-            v-model="uploadDialog"
-          >
-            <UploadComponent @addImages="addImages" @offDialog="uploadDialog = false"/>
-          </v-dialog>
-        </div>
-      </v-row>
-
-      <v-row>
-        <ProgramImageListComponent
-          :imageNameList="imageNameList"
-          :key="imageListKey"
-          @onImageDeleted="onImageDeleted"
-        ></ProgramImageListComponent>
-      </v-row>
-
-      <!--생성 버튼-->
-      <v-row>
-        <v-col>
-          <CreateButtonComponent
-            @onClickSave="saveProgramForm"
-            @onClickCancel="cancelProgramForm"
-          ></CreateButtonComponent>
-        </v-col>
-      </v-row>
-    </v-container>
+        <!--생성 버튼-->
+        <v-row>
+          <v-col>
+            <CreateButtonComponent
+              @onClickSave="saveProgramForm"
+              @onClickCancel="cancelProgramForm"
+            ></CreateButtonComponent>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
   </DefaultLayout>
 </template>
 
@@ -121,6 +124,7 @@ import {useRouter} from "vue-router";
 import consts from "@/consts/const";
 import CreateButtonComponent from "@/components/util/CreateButtonComponent.vue";
 import useMemberInfo from "@/store/useMemberInfo";
+import {useField, useForm} from "vee-validate";
 
 const router = useRouter()
 //ref
@@ -140,7 +144,6 @@ const onClickUploadButton = () => {
 
 //첨부파일 imageList에 추가, 추가시 ImageListComponent 리로딩
 const addImages = (imageNames) => {
-  console.log(imageNames)
   imageNameList.value.push(...imageNames)
   imageListKey.value++
 }
@@ -185,8 +188,33 @@ const generateCurriculum = () => {
   programForm.value.times = mainCurriculum.value.length
 }
 
+
 //프로그램 생성
 const saveProgramForm = async () => {
+  /*validation*/
+  const validations = {
+    title: value => {
+      if(!value) return '이 정보가 비어있습니다.'
+      return true
+    },
+    content: value => {
+      if(!value) return '이 정보가 비어있습니다.'
+      return true
+    },
+    times: value => {
+      if(!value) return '이 정보가 비어있습니다.'
+      return true
+    },
+    fee: value => {
+      if(!value) return '이 정보가 비어있습니다.'
+      return true
+    }
+  }
+
+  useForm({validationSchema: validations})
+
+  const {value, errorMessage} = useField(programForm)
+
   //maincurriculum, studentId, ProgramForm(subCategoryId, title, content, times, fee)
   programForm.value.times = mainCurriculum.value.length
 
@@ -204,13 +232,15 @@ const saveProgramForm = async () => {
     studentId: studentId,
     curriculumJson: JSON.stringify(mainCurriculum.value),
   }
-  console.log(programFormDTO)
 
   const data = await postProgramForm(programFormDTO)
   await router.push({
     name: consts.PROGRAM_DETAIL_PAGE,
     params: {
       id :data
+    },
+    query: {
+      id: programForm.value.subCategoryId
     }
   })
 }
@@ -219,9 +249,7 @@ const cancelProgramForm = async () => {
   await deleteMinioImage(imageNameList.value)
 
   imageNameList.value = []
-  await router.push({
-    name: consts.HOME_PAGE,
-  })
+  await router.go(-1)
 
 }
 </script>

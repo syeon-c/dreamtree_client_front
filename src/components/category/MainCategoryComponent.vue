@@ -13,7 +13,7 @@
 
 <script setup>
 
-import {getHomeCategories} from "@/apis/api";
+import {getLayoutInfo} from "@/apis/api";
 import {onMounted, ref} from "vue";
 const mainCategory = ref();
 const mainCategoryList = ref([]);
@@ -26,9 +26,9 @@ const onUpdateCategoryValue = (mainCategoryObject) => {
 }
 
 const fetchCategories = async () => {
-  const res = await getHomeCategories();
-  console.log(res)
-  res.map((item, index) => {
+  subCategoryList.value = []
+  const res = await getLayoutInfo();
+  res.categories.map((item, index) => {
     mainCategoryList.value.push({
       title: item.categoryName,
       index: index

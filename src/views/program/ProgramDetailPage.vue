@@ -4,6 +4,7 @@
       <!--대학생 정보-->
       <LessonStudentInfoComponent
         :programDetailInfo="programDetailInfo"
+        @onClickStudentImage="moveToStudentPage"
       ></LessonStudentInfoComponent>
 
       <!--레슨정보 없을시 디폴트-->
@@ -30,7 +31,6 @@
         @onClickLesson="onClickLesson"
       ></LessonInfoComponent>
 
-
       <!--레슨 상세 정보 모달-->
       <div class="text-center">
         <v-dialog
@@ -38,10 +38,11 @@
         >
           <LessonDetailComponent
             v-if="lessonIndex != undefined"
-            @offDialog="lessonDialog = false"
             :programTitle="programDetailInfo.title"
             :lessonInfo="programDetailInfo.lessonLists[lessonIndex]"
             :key="lessonDetailComponentKey"
+            @offDialog="lessonDialog = false"
+            @paySucceeded="afterPaySucceed"
           />
         </v-dialog>
       </div>
@@ -82,13 +83,31 @@
                   :key="url"
                 >
                   <v-img
-                    :src="`${consts.IMG_DOMAIN}/${url}`"
+                    :src="getImageUrl(url)"
                     width="200"
-                  ></v-img>
+                  >
+                    <template v-slot:placeholder>
+                      <div class="d-flex align-center justify-center fill-height">
+                        <v-progress-circular
+                          color="grey-lighten-4"
+                          indeterminate
+                        ></v-progress-circular>
+                      </div>
+                    </template>
+                  </v-img>
                 </v-col>
               </v-row>
             </v-card-item>
           </v-card>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-btn
+            @click="onClickListButton"
+          >
+            목록
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -100,12 +119,13 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import {onMounted, ref} from "vue";
 import ProgramCurriculumDayComponent from "@/components/program/ProgramCurriculumDayComponent.vue";
 import {getProgramDetailInfo} from "@/apis/api";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import consts from "@/consts/const";
 import LessonStudentInfoComponent from "@/components/lesson/LessonStudentInfoComponent.vue";
 import LessonInfoComponent from "@/components/lesson/LessonInfoComponent.vue";
 import LessonDetailComponent from "@/components/lesson/LessonDetailComponent.vue";
 import useMemberInfo from "@/store/useMemberInfo";
+import {getImageUrl} from "@/util/imageUrlGetter";
 
 
 const programDetailInfo = ref({})
@@ -114,7 +134,38 @@ const lessonIndex = ref()
 const lessonDetailComponentKey = ref(0)
 
 const route = useRoute()
+const router = useRouter()
 
+
+/*결제 이후*/
+const afterPaySucceed = (payInfo) => {
+  lessonDialog.value = false
+  console.log(payInfo)
+  /*todo: 결제 이후 로직 구현*/
+}
+
+/*목록 버튼 누를 시 리스트 페이지로*/
+const onClickListButton = () => {
+  router.push({
+    name: consts.PROGRAM_LIST_PAGE,
+    query: {
+      subCategoryId: route.query.id
+    }
+  })
+}
+
+const moveToStudentPage = () => {
+  console.log(programDetailInfo.value)
+  router.push({
+    name: consts.STUDENT_INFO_PAGE,
+    params:{
+      id: programDetailInfo.value.studentId
+    }
+  })
+}
+
+
+/*해당 인덱스의 lesson 상세 정보를 가져오는 dialog를 보여준다.*/
 const onClickLesson = (index) => {
   if(index == undefined) return
   lessonDialog.value = true

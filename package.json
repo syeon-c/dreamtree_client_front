@@ -28,6 +28,7 @@
     "sass": "^1.58.2",
     "serve": "^14.2.0",
     "tailwindcss": "^3.2.6",
+    "vee-validate": "^4.7.4",
     "vue": "^3.2.47",
     "vue-el-datepicker": "^1.1.0",
     "vue-router": "^4.0.0",

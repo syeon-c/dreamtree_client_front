@@ -131,7 +131,6 @@ const getAddressApi = () => {
 }
 
 const onUpdateProgramSelect = async (obj) => {
-  console.log(obj)
   lessonForm.value.programId = obj.programId
   lessonForm.value.subCategoryId = obj.subCategoryId
 }
@@ -162,14 +161,15 @@ const saveLessonForm = async () => {
     name: consts.PROGRAM_DETAIL_PAGE,
     params: {
       id: lessonForm.value.programId
+    },
+    query: {
+      id: lessonForm.value.subCategoryId
     }
   })
 }
 
 const cancelLessonForm = () => {
-  router.push({
-    name: consts.HOME_PAGE,
-  })
+  router.go(-1)
 }
 
 onMounted(() => {

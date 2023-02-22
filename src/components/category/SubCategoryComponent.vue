@@ -20,6 +20,7 @@ const subCategoryList = ref([])
 
 watch(() => props.subCategoryList, (list) => {
   categoryInfo.value = null
+  subCategoryList.value = []
   list.map(item => {
     subCategoryList.value.push({
       title: item.subCategoryName,

@@ -2,13 +2,13 @@
   <v-row dense class="border">
     <v-col
       cols="3"
-      class="border"
+      class="border d-flex"
     >
       <v-img
-        v-if="programDetailInfo.profileImgUrl"
         :src="getPersonImageUrl(programDetailInfo.profileImgUrl)"
-        @click="onClickStudentImage"
+        @click="test"
       >
+        <!--   대기시 뺑글이    -->
         <template v-slot:placeholder>
           <div class="d-flex align-center justify-center fill-height">
             <v-progress-circular
@@ -23,13 +23,13 @@
       <v-sheet>
         <v-card flat class="bg-grey-lighten-3">
           <v-row justify="space-around">
-            <v-col>
+            <v-col cols="7">
               <v-card-title>
                 {{programDetailInfo.title}}
               </v-card-title>
             </v-col>
             <v-spacer></v-spacer>
-            <v-col>
+            <v-col cols="5">
               <v-card-text>
                 {{ programDetailInfo.email }}
               </v-card-text>
@@ -61,15 +61,14 @@
 import consts from "@/consts/const";
 import {ref} from "vue";
 import {getPersonImageUrl} from "@/util/imageUrlGetter";
-
+import img from '@/assets/images/no_image.jpg'
 const props = defineProps(['programDetailInfo'])
-
+const emits = defineEmits(['onClickStudentImage'])
 const model = ref()
 
-const onClickStudentImage = (temp) => {
-  console.log(temp)
+const test = () => {
+  emits('onClickStudentImage')
 }
-
 </script>
 
 <style scoped>

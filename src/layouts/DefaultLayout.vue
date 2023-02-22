@@ -176,7 +176,6 @@ const fetchCategories = async () => {
 
   categories.value = data.categories
   member.value = data.memberDTO
-  console.log(data)
 }
 
 onBeforeMount(() => {

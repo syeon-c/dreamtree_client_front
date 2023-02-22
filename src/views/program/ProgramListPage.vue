@@ -58,6 +58,9 @@ const onClickProgramItem = (programId) => {
     name: consts.PROGRAM_DETAIL_PAGE,
     params: {
       id: programId
+    },
+    query: {
+      id: route.query.subCategoryId
     }
   })
 }
