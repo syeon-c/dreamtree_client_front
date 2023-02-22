@@ -1,5 +1,6 @@
 <template>
   <v-btn
+    type="submit"
     color="success"
     class="me-2"
     @click="emits('onClickSave')"

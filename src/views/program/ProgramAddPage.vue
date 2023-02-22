@@ -1,12 +1,11 @@
 <template>
-  <DefaultLayout>
-    <v-form>
-      <!--카테고리-->
+  <DefaultLayout>     <!--카테고리-->
       <v-container class="form-container">
           <v-row>
             <v-col>
               <div style="display: flex">
                 <MainCategoryComponent
+                  name="mainCategory"
                   @mainCategoryChange="mainCategoryChange"
                 ></MainCategoryComponent>
                 <SubCategoryComponent
@@ -20,22 +19,33 @@
           <!--입력폼-->
           <v-row>
             <v-col>
-              <v-text-field
-                v-model="programForm.title"
-                label="제목"
-              ></v-text-field>
+              <Field name="title" v-slot="{field, errors}">
+                <v-text-field
+                  v-bind="field"
+                  :error-messages="errors"
+                  v-model="programForm.title"
+                  label="제목"
+                ></v-text-field>
+              </Field>
 
-              <v-textarea
-                v-model="programForm.content"
-                :rules="[v => !!v]"
-              ></v-textarea>
+              <Field name="content" v-slot="{field, errors}">
+                <v-textarea
+                  v-bind="field"
+                  :error-messages="errors"
+                  v-model="programForm.content"
+                  label="내용"
+                ></v-textarea>
+              </Field>
 
-              <v-text-field
-                type="number"
-                v-model="programForm.fee"
-                label="가격"
-                :rules="[v => !!v]"
-              ></v-text-field>
+              <Field name="fee" v-slot="{field, errors}">
+                <v-text-field
+                  v-bind="field"
+                  :error-messages="errors"
+                  type="number"
+                  v-model="programForm.fee"
+                  label="가격"
+                ></v-text-field>
+              </Field>
             </v-col>
           </v-row>
 
@@ -107,7 +117,23 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-form>
+
+
+    <v-snackbar
+      v-model="snackbar"
+    >
+      {{ text }} 에 값이 없습니다
+
+      <template v-slot:actions>
+        <v-btn
+          color="pink"
+          variant="text"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </DefaultLayout>
 </template>
 
@@ -124,7 +150,10 @@ import {useRouter} from "vue-router";
 import consts from "@/consts/const";
 import CreateButtonComponent from "@/components/util/CreateButtonComponent.vue";
 import useMemberInfo from "@/store/useMemberInfo";
-import {useField, useForm} from "vee-validate";
+import {Form, Field, useForm} from "vee-validate";
+import * as yup from 'yup'
+import objectMapper from "@/util/objectmapper";
+
 
 const router = useRouter()
 //ref
@@ -136,6 +165,8 @@ const uploadDialog = ref(false)
 const imageNameList = ref([])
 const imageListKey = ref(0)
 
+const snackbar = ref()
+const text = ref()
 
 //첨부파일 dialog
 const onClickUploadButton = () => {
@@ -188,50 +219,61 @@ const generateCurriculum = () => {
   programForm.value.times = mainCurriculum.value.length
 }
 
-
+const validations = {
+  title: yup.string().required(),
+  content: yup.string().required(),
+  fee: yup.string().required()
+}
 //프로그램 생성
 const saveProgramForm = async () => {
-  /*validation*/
-  const validations = {
-    title: value => {
-      if(!value) return '이 정보가 비어있습니다.'
-      return true
-    },
-    content: value => {
-      if(!value) return '이 정보가 비어있습니다.'
-      return true
-    },
-    times: value => {
-      if(!value) return '이 정보가 비어있습니다.'
-      return true
-    },
-    fee: value => {
-      if(!value) return '이 정보가 비어있습니다.'
-      return true
-    }
-  }
-
-  useForm({validationSchema: validations})
-
-  const {value, errorMessage} = useField(programForm)
-
-  //maincurriculum, studentId, ProgramForm(subCategoryId, title, content, times, fee)
+  //maincurriculum, studentId, ProgramForm(programId, subCategoryId, title, content, times, fee)
   programForm.value.times = mainCurriculum.value.length
 
   const fileForms = []
   imageNameList.value.map(item => {
     fileForms.push(item)
   })
-  programForm.value.fileForms = fileForms
+
+  const programFormDTO = {
+    subCategoryId: null,
+    title: null,
+    content: null,
+    times: null,
+    fee: null,
+    curriculumJson: null,
+    studentId: null,
+    programId: null,
+    fileForms: fileForms
+  }
 
   const { getMemberInfo } = useMemberInfo()
   const studentId = getMemberInfo().id
 
-  const programFormDTO = {
+  objectMapper(programFormDTO, {
     ...programForm.value,
     studentId: studentId,
     curriculumJson: JSON.stringify(mainCurriculum.value),
+  })
+  text.value = ""
+
+  let flag = true
+  /*validation*/
+  for(const key in programFormDTO){
+    if(!programFormDTO[key]){
+      flag = false
+      text.value += key + ","
+    }
   }
+  if(programFormDTO.curriculumJson.length == 0){
+    flag = false
+    text.value += "curriculumJson"
+  }
+
+  if(!flag){
+    snackbar.value = true
+    return
+  }
+
 
   const data = await postProgramForm(programFormDTO)
   await router.push({

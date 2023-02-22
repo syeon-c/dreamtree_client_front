@@ -23,7 +23,6 @@
 <script setup>
 import consts from "@/consts/const";
 import useMemberInfo from "@/store/useMemberInfo";
-import {ref} from "vue";
 
 const {getMemberInfo} = useMemberInfo()
 const userInfo = getMemberInfo()
