@@ -174,8 +174,13 @@ const routes = [
   },
   {
     path: '/kakaologin',
-    name: 'InfoModifyPage',
+    name: 'KakaoLoginPage',
     component: () => import('@/views/KakaoLoginPage.vue'),
+  },
+  {
+    path: '/loginPath',
+    name: 'LoginPathPage',
+    component: () => import('@/views/LoginPathPage.vue'),
   },
 ]
 

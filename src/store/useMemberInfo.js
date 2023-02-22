@@ -7,12 +7,16 @@ const useMemberInfo = defineStore('useMemberInfo',() => {
   const memberInfo = ref({id: null, role: null})
 
   const getMemberInfo = () => {
-    memberInfo.value.id = 1
-    memberInfo.value.role = consts.STUDENT
     return memberInfo.value
   }
 
-  return {memberInfo, getMemberInfo}
+  const setMemberInfo = (data) => {
+
+    memberInfo.value.id = data.id
+    memberInfo.value.role = data.memberValue
+
+  }
+  return {getMemberInfo, setMemberInfo}
 })
 
 export default useMemberInfo
