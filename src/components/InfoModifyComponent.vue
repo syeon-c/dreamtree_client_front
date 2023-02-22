@@ -121,7 +121,6 @@ watch(dialog, async () => {
     result.value.password = info.value.password
     result.value.profileImgUrl = info.value.profileImgUrl
 
-    console.log("제발 업데이트")
     console.log(result.value)
 
     await updateParentInfo(result.value)
