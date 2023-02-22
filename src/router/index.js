@@ -177,6 +177,11 @@ const routes = [
     name: 'InfoModifyPage',
     component: () => import('@/views/KakaoLoginPage.vue'),
   },
+  {
+    path: '/test',
+    name: 'TestPage',
+    component: () => import('@/views/TestPage.vue'),
+  }
 ]
 
 const router = createRouter({

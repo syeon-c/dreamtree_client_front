@@ -100,6 +100,23 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <v-snackbar
+      v-model="snackbar"
+    >
+      {{ text }} 에 값이 없습니다
+
+      <template v-slot:actions>
+        <v-btn
+          color="pink"
+          variant="text"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
   </DefaultLayout>
 </template>
 
@@ -112,8 +129,12 @@ import {useRouter} from "vue-router";
 import consts from "@/consts/const";
 import {dayToBitParser} from "@/util/dayBitParser";
 import useMemberInfo from "@/store/useMemberInfo";
+import objectMapper from "@/util/objectmapper";
 
 const router = useRouter()
+
+const snackbar = ref()
+const text = ref()
 
 const programList = ref([])
 const lessonForm = ref({
@@ -144,7 +165,38 @@ const fetchProgramLists = async () => {
 }
 
 const saveLessonForm = async () => {
+  console.log(lessonForm.value)
+
   const lessonFormDTO = {
+    day: null,
+    fee: null,
+    personnel: null,
+    place: null,
+    programId: null,
+    subCategoryId: null,
+    startDate: null,
+    endDate: null,
+    expireStartDate: null,
+    expireEndDate: null,
+    lessonTime: null,
+    lessonLength: null,
+  }
+
+/*validation*/
+  text.value = ""
+  if(!lessonForm.value.day){
+    text.value = 'day'
+    snackbar.value = true
+    return
+  }
+
+  if(!lessonForm.value.time){
+    text.value = 'time'
+    snackbar.value = true
+    return
+  }
+
+  objectMapper(lessonFormDTO, {
     ...lessonForm.value,
     startDate: lessonForm.value.date[0],
     endDate: lessonForm.value.date[1],
@@ -152,9 +204,23 @@ const saveLessonForm = async () => {
     expireEndDate: lessonForm.value.expireDate[1],
     lessonTime: lessonForm.value.time[0].hours,
     lessonLength: lessonForm.value.time[1].hours - lessonForm.value.time[0].hours,
+  })
+
+
+  /*validation*/
+  let flag = true
+  for(const key in lessonFormDTO){
+    if(!lessonFormDTO[key]){
+      flag = false
+      text.value += key + ","
+    }
   }
 
   lessonFormDTO.day = dayToBitParser(lessonForm.value.day)
+  if(!flag){
+    snackbar.value = true
+    return
+  }
 
   await postLessonForm(lessonFormDTO)
   await router.push({
