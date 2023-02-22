@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import {kakaoLogin, kakaoSignUp} from "@/apis/KakaoLoginAPIS";
+import {kakaoLogin, kakaoSignUp, postAuthCode} from "@/apis/KakaoLoginAPIS";
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import useMemberInfo from "@/store/useMemberInfo";
@@ -30,8 +30,28 @@ import useMemberInfo from "@/store/useMemberInfo";
 const route = useRoute()
 const router = useRouter()
 const data = ref({})
+const code = route.query.code
+
+console.log(code)
+if (code) {
+  console.log("code...")
+  postAuthCode(code)
+}
+
 const linkToKakaoRedirectUrl = () => {
 
+  if (window.Kakao.Auth.getAccessToken()) {
+    window.Kakao.API.request({
+      url: '/v1/user/unlink',
+      success: async (res) => {
+        console.log("unlink...", res)
+      },
+      fail: error => {
+        console.log(error)
+      }
+    })
+    window.Kakao.Auth.setAccessToken()
+  }
   window.Kakao.Auth.login({
     scope: 'profile_nickname,profile_image,account_email,birthday',
     success: getKakaoAccount
@@ -43,7 +63,7 @@ const linkToKakaoAuthorization = () => {
 
   window.Kakao.Auth.authorize({
     redirectUri: 'http://localhost:3000/kakaologin',
-    scope: 'profile_nickname,profile_image,account_email,birthday'
+    scope: 'profile_nickname,profile_image,account_email,birthday',
   })
 
 }
