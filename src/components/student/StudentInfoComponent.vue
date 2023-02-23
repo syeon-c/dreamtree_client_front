@@ -172,6 +172,24 @@ const imageNameList = ref([])
 // Dialog에서 전송 클릭 시
 const addClickCollege = async () => {
 
+  if(!addCollegeInfo.value.college) {
+
+    alert("대학교를 입력하세요")
+    return
+  }
+
+  if(!addCollegeInfo.value.major) {
+
+    alert("전공를 입력하세요")
+    return
+  }
+
+  if(!imageNameList.value[0]) {
+
+    alert("인증파일을 업로드하세요")
+    return
+  }
+
   const college = {
     studentId: props.id,
     college: addCollegeInfo.value.college,

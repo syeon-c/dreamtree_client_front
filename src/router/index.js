@@ -82,6 +82,18 @@ const routes = [
         name: 'CertificateAuthInfoPage',
         component: () => import('@/views/admin/CertificateAuthInfoPage.vue')
       },
+      {
+        // 신고 관리
+        path: 'report',
+        name: 'AdminReportManagementPage',
+        component: () => import('@/views/admin/AdminReportManagementPage.vue')
+      },
+      {
+        // 프로그램 관리
+        path: 'program',
+        name: 'AdminProgramManagementPage',
+        component: () => import('@/views/admin/AdminProgramManagementPage.vue')
+      },
     ]
   },
   {
@@ -111,7 +123,30 @@ const routes = [
         name: 'StudentMailPage',
         component: () => import('@/views/student/StudentMailPage.vue')
       },
+      {
+        // 신고
+        path: 'report',
+        name: 'StudentReportPage',
+        component: () => import('@/views/ReportPage.vue')
+      },
+      {
+        // 프로그램
+        path: 'program',
+        name: 'MyProgramListPage',
+        component: () => import('@/views/MyProgramListPage.vue')
+      },
+      {
+        // 레슨
+        path: 'lesson',
+        name: 'MyLessonListPage',
+        component: () => import('@/views/MyLessonListPage.vue')
+      },
     ]
+  },
+  {
+    path: '/test',
+    name: 'TestCal',
+    component: () => import('@/views/TestCal.vue')
   },
   {
     path: '/request',

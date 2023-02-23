@@ -1,5 +1,6 @@
 import axios from "axios";
 import consts from "@/consts/const";
+import {ca} from "vuetify/locale";
 
 
 /*** 임성현 ver.0.1 ***/
@@ -85,6 +86,93 @@ export const authCollege = async (college) => {
 
   try {
     const res = await axios.post(`${consts.DOMAIN}/api/students/file/`, college)
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+
+// 내가 한 신고 리스트
+
+export const myReportList = async (email) => {
+
+  console.log(email)
+
+  try {
+    const res = await axios.get(`${consts.DOMAIN}/api/report/myReport`, {
+      params: {
+        ...email
+      }
+    })
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+
+// 신고 조회
+export const getReport = async (id) => {
+
+  try {
+    const res = await axios.get(`${consts.DOMAIN}/api/report/member/${id}`)
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+
+// 신고 삭제
+export const removeReport = async (id) => {
+
+  try {
+    const res = await axios.put(`${consts.DOMAIN}/api/report/remove`, id)
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+
+// 신고 하기
+export const addReport = async (report) => {
+
+  console.log("resilt:", report)
+
+  try {
+    const res = await axios.post(`${consts.DOMAIN}/api/report/write/`, report)
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+
+// 프로그램 리스트
+export const myProgramList = async (id) => {
+
+  try {
+    const res = await axios.get(`${consts.DOMAIN}/api/program/myProgram/${id}`)
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+
+// 레슨 리스트
+export const myLessonList = async (id) => {
+
+  try {
+    const res = await axios.get(`${consts.DOMAIN}/api/program/myLesson/${id}`)
 
     return res.data
   } catch (e) {

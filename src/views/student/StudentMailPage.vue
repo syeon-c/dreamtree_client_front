@@ -115,8 +115,6 @@ router.beforeEach((to, from, next) => {
 
   toMailPNum.value = to.query.toPage
 
-  pSize.value = to.query.size
-
   fromMailPNum.value = to.query.fromPage
 
 
