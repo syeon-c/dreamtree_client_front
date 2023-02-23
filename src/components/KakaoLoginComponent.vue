@@ -26,11 +26,15 @@ import {kakaoLogin, kakaoSignUp, postAuthCode} from "@/apis/KakaoLoginAPIS";
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import useMemberInfo from "@/store/useMemberInfo";
+import {useCookies} from "vue3-cookies";
 
 const route = useRoute()
 const router = useRouter()
 const data = ref({})
 const code = route.query.code
+const memberInfo = ref(useMemberInfo().getMemberInfo())
+const {cookies} = useCookies()
+
 
 console.log(code)
 if (code) {
@@ -87,23 +91,28 @@ const getKakaoAccount =  async () => {
       }
       data.value.pathValue = pathValue
 
-      const loginInfo = await kakaoLogin(data.value)
+      let loginInfo = await kakaoLogin(data.value)
       console.log("server....", loginInfo)
 
 
       // 없는 유저면 회원가입 경로로 재전송
-      if (!loginInfo) {
+      if (!loginInfo.id) {
 
         console.log("signUp....", loginInfo)
         const success = await kakaoSignUp(data.value)
 
         if(!success) return
 
-        await kakaoLogin(data.value)
+        loginInfo = await kakaoLogin(data.value)
 
       }
 
-      useMemberInfo().setMemberInfo(loginInfo)
+      useMemberInfo().setMemberInfo()
+      memberInfo.value = useMemberInfo().getMemberInfo()
+
+      cookies.set("loginId", loginInfo.id)
+      cookies.set("loginRole", loginInfo.memberValue)
+      console.log("id.....", cookies.get("loginId"))
       await router.push({name: 'HomePage'})
 
     },

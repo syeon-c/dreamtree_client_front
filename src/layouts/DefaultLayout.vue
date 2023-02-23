@@ -30,7 +30,8 @@
 
         <v-list-item
           prepend-icon="fa-solid fa-right-from-bracket"
-          title="Logout"
+          title="로그아웃"
+          @click="onClickLogout"
         ></v-list-item>
 
       </v-list>
@@ -43,6 +44,7 @@
         <v-list-item
           prepend-icon="fa-solid fa-key"
           title="로그인"
+          @click="movePage('LoginPathPage')"
         ></v-list-item>
 
         <v-list-item
@@ -163,16 +165,21 @@ import {getLayoutInfo} from "@/apis/api";
 import consts from "@/consts/const";
 import useMemberInfo from "@/store/useMemberInfo";
 import {getPersonImageUrl} from "@/util/imageUrlGetter";
+import {useCookies} from "vue3-cookies";
 
 /** 분야 카테고리 **/
 const categories = ref([])
 const member = ref({})
 const drawer = ref()
-
 const router = useRouter()
-const memberInfo = useMemberInfo().getMemberInfo()
+const { cookies } = useCookies()
+const memberInfo = ref(useMemberInfo().getMemberInfo())
+
+console.log("member......", memberInfo)
+
+/** 카테고리 정보 받아오기 **/
 const fetchCategories = async () => {
-  const data = await getLayoutInfo(memberInfo.id, memberInfo.role);
+  const data = await getLayoutInfo(memberInfo.value.id, memberInfo.value.role);
 
   categories.value = data.categories
   member.value = data.memberDTO
@@ -182,7 +189,7 @@ onBeforeMount(() => {
   fetchCategories()
 })
 
-
+/** 페이지 이동 **/
 const movePage = (page) => {
   router.push({name: page})
 }
@@ -197,6 +204,31 @@ const onClickSubCategory = async (subCategoryId) => {
   })
 }
 
+/** 로그아웃 **/
+const onClickLogout = async () => {
+
+  if (window.Kakao.Auth.getAccessToken()) {
+
+    console.log("Before...", window.Kakao.Auth.getAccessToken())
+
+    try {
+
+      await window.Kakao.Auth.logout()
+      // 쿠키 삭제 및 store/memberInfo 변경
+      console.log("After...", window.Kakao.Auth.getAccessToken())
+      cookies.remove("loginId")
+      cookies.remove("loginRole")
+      useMemberInfo().initMemberInfo()
+      memberInfo.value = useMemberInfo().getMemberInfo()
+
+    } catch (error) { console.log(error) }
+  } else {
+
+    alert("로그인이 필요합니다!")
+
+  }
+
+}
 </script>
 
 <style scoped>

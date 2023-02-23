@@ -5,7 +5,7 @@
           <v-img
             src="public/parents.png"
             width="200"
-            @click="() => pathValue = 'students'"
+            @click="() => pathValue = 'student'"
           >
           </v-img>
 
@@ -18,8 +18,8 @@
         <v-col>
           <v-img
             src="public/students.png"
-            width="200"
-            @click="() => pathValue = 'parents'"
+            width="180"
+            @click="() => pathValue = 'parent'"
           >
           </v-img>
 
