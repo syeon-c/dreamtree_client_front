@@ -226,3 +226,32 @@ export const getAuthCount = async () => {
   }
 }
 
+// 관리지 신고 조회
+export const adminGetReport = async (id) => {
+
+  try {
+    const res = await axios.get(`${consts.DOMAIN}/api/report/admin/${id}`)
+
+    return res.data
+  } catch (e) {
+
+    return
+  }
+}
+
+// 신고 상태 업데이트
+export const updateReportStatus = async (id) => {
+
+  const result = {reportId: id, status: 'solved'}
+
+  console.log(result)
+
+  try {
+    const res = await axios.put(`${consts.DOMAIN}/api/report/update/`, result)
+
+    return res
+  } catch (e) {
+
+    return
+  }
+}

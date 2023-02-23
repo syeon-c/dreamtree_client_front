@@ -21,57 +21,67 @@
 
   <!-- post dialog -->
   <v-dialog v-model="dialog">
+    <v-container class="bg-white">
+      <v-row>
+        <v-col>
+          <v-text-field
+            v-model="addCertificateInfo.name"
+            label="수상/취득 내용"
+          ></v-text-field>
+        </v-col>
+      </v-row>
 
-    <v-card>
-      <v-card-text style="text-align: center">
-        <div class="v-container">
-          <v-sheet width="300" class="mx-auto">
-            <v-form fast-fail @submit.prevent>
-              <v-text-field
-                v-model="addCertificateInfo.name"
-                label="수상/취득 내용"
-              ></v-text-field>
+      <v-row>
+        <v-col>
+          <div class="text-center">
+            <v-dialog
+              v-model="uploadDialog"
+            >
+              <UploadComponent @addImages="addImages" @offDialog="uploadDialog = false"/>
+            </v-dialog>
+          </div>
+        </v-col>
+      </v-row>
 
-              <v-text-field
-                v-model="addCertificateInfo.aquireDate"
-                label="수상/취득 년월"
-              ></v-text-field>
+      <v-row>
+        <v-col>
+          <v-text-field
+            disabled
+          > {{ new Date(date).toDateString() }}</v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <VueDatePicker v-model="date" auto-apply placeholder="수상/취득 년월"/>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          인증파일
+          <v-btn
+            prepend-icon="fa-solid fa-floppy-disk"
+            @click="onClickUploadButton"
+          >
+            Upload
+          </v-btn>
+        </v-col>
+      </v-row>
 
-              <div>
-                인증파일
-                <v-btn
-                  prepend-icon="fa-solid fa-floppy-disk"
-                  @click="onClickUploadButton"
-                >
-                  Upload
-                </v-btn>
-              </div>
+      <v-row>
+        <v-col>
+          <v-btn color="grey" @click="addClickCertificate"> 전송</v-btn>
+          <v-btn color="grey" @click="dialog = false"> 취소</v-btn>
+        </v-col>
+      </v-row>
 
-              <div class="text-center">
-                <v-dialog
-                  v-model="uploadDialog"
-                >
-                  <UploadComponent @addImages="addImages" @offDialog="uploadDialog = false"/>
-                </v-dialog>
-              </div>
-            </v-form>
-          </v-sheet>
-        </div>
-      </v-card-text>
-      <v-card-actions class="justify-center">
-        <v-btn color="grey" @click="addClickCertificate"> 전송</v-btn>
-        <v-btn color="grey" @click="dialog = false"> 취소</v-btn>
-      </v-card-actions>
-    </v-card>
-
+    </v-container>
   </v-dialog>
-
 </template>
 
 <script setup>
 
 import {addCertificate, getCertificateList} from "@/apis/adminAPIS";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import UploadComponent from "@/components/image/UploadComponent.vue";
 
 const props = defineProps(['id'])
@@ -92,10 +102,11 @@ const uploadDialog = ref(false)
 
 const dialog = ref(false)
 
+const date = ref()
+
 const onClickUploadButton = () => {
   uploadDialog.value = true
 }
-
 
 const addImages = (imageNames) => {
   console.log(imageNames)
@@ -106,12 +117,45 @@ const addImages = (imageNames) => {
 // Dialog에서 전송 클릭 시
 const addClickCertificate = async () => {
 
+  if (!addCertificateInfo.value.name) {
+    alert("자격증/수상 명을 입력하세요")
+
+    return
+  }
+
+  if (!date.value.getYear()) {
+    alert("취득일을 선택하세요")
+  }
+
+  const month = () => {
+
+    if(parseInt(date.value.getMonth() + 1) < 10) return '0' + parseInt(date.value.getMonth() + 1)
+
+    return date.value.getMonth()
+  }
+
+  const day = () => {
+
+    if(date.value.getDate() < 10) return '0' + date.value.getDate()
+
+    return date.value.getDate()
+  }
+
+  const aquireDate = date.value.getYear()
+    + 1900
+    + '-'
+    + month()
+    + '-'
+    + day()
+
   const certificate = {
     studentId: props.id,
     name: addCertificateInfo.value.name,
-    aquireDate: addCertificateInfo.value.aquireDate,
+    aquireDate: aquireDate,
     url: imageNameList.value[0]
   }
+
+  console.log(certificate)
 
   await addCertificate(certificate)
 

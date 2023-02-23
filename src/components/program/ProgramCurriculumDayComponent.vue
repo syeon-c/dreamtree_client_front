@@ -59,6 +59,7 @@ const props = defineProps(['dayCurriculum', 'readMode', 'times'])
 const readMode = ref(props.readMode)
 const curriculum = ref(props.dayCurriculum)
 
+
 //1줄 삭제
 const removeCurriculum = (content) => {
   curriculum.value = curriculum.value.filter(e => e !== content)
