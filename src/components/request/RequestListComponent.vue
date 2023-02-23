@@ -12,6 +12,7 @@
 
           <div class="d-flex flex-no-wrap ma-1">
             <div style="margin-left: 1px">
+              <v-card-subtitle>{{ request.nickname }}</v-card-subtitle>
               <v-card-title>{{ request.title }}</v-card-title>
               <v-card-text>{{ request.description }}</v-card-text>
             </div>

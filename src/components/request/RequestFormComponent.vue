@@ -65,12 +65,12 @@
 
     </v-container>
     <div class="flex-nowrap">
-      <v-btn
-        style="margin-right: 15px;
-        background: lightgray"
-        @click="onClickSaveRequest"
-      >요청</v-btn>
-      <v-btn style="background: lightgray">취소</v-btn>
+
+      <v-btn style="margin-right: 15px; background: lightgray" @click="onClickSaveRequest"
+      > 요청 </v-btn>
+
+      <v-btn style="background: lightgray" @click="emits('moveListPage')"> 취소 </v-btn>
+
     </div>
   </v-form>
 
