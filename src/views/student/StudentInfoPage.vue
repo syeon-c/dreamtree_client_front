@@ -13,15 +13,15 @@
     <v-window v-model="tab">
       <v-window-item value="1">
         <StudentInfoComponent
-          @moveModify="moveModify"
-          :id="studentId"
+          @onClickMoveModifyPage="moveModify"
+          :id="id"
         />
       </v-window-item>
 
       <v-window-item value="2">
         <CertificateManagementComponent
           @addSuccess="addSuccess"
-          :id="studentId"
+          :id="id"
           :key="certificateComponentKey"
         />
       </v-window-item>
@@ -38,6 +38,7 @@ import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import CertificateManagementComponent from "@/components/student/CertificateManagementComponent.vue";
 import StudentInfoComponent from "@/components/student/StudentInfoComponent.vue";
+import useMemberInfo from "@/store/useMemberInfo";
 
 const router = useRouter()
 
@@ -45,7 +46,8 @@ const route = useRoute()
 
 const tab = ref()
 
-const studentId = route.query.id
+const memberInfo = ref(useMemberInfo().getMemberInfo())
+const id = memberInfo.value.id
 
 const certificateComponentKey = ref(0)
 
@@ -60,9 +62,8 @@ const addSuccess = () => {
 // 회원 수정 페이지 이동
 const moveModify = () => {
 
-  const id = studentId
+  router.push({name: 'StudentModifyPage', params: {id: id} })
 
-  router.push({name: 'StudentModifyPage', query: {id}})
 }
 
 

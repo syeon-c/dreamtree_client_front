@@ -1,7 +1,8 @@
 <template>
-
   <default-layout>
+
     <LessonListComponent />
+
   </default-layout>
 </template>
 

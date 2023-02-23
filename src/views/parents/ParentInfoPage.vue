@@ -14,12 +14,14 @@
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import ParentInfoComponent from "@/components/parents/ParentInfoComponent.vue";
 import {useRoute, useRouter} from "vue-router";
+import {ref} from "vue";
+import useMemberInfo from "@/store/useMemberInfo";
 
 const route = useRoute()
 const router = useRouter()
 
-const id = route.params.id
-
+const memberInfo = ref(useMemberInfo().getMemberInfo())
+const id = memberInfo.value.id
 
 const moveInfoModifyPage = () => {
 

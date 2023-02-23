@@ -2,21 +2,29 @@
   <v-list lines="two">
 
     <v-list-subheader>
-      {{ memberInfo.nickname }} 님, 환영합니다!
+      {{ memberInfo.nickname }} 선생님, 환영합니다!
     </v-list-subheader>
 
     <v-list-item
       prepend-icon="fa-solid fa-caret-right"
-      title="수강 프로그램 조회"
-      @click="() => emits(`onClickMoveProgressList`)"
+      title="프로그램 관리"
+      @click="() => emits(`onClickMoveProgramListPage`)"
     ></v-list-item>
 
     <v-divider/>
 
     <v-list-item
       prepend-icon="fa-solid fa-caret-right"
-      title="출석 현황 조회"
-      @click="() => emits('onClickMoveAttendanceList')"
+      title="레슨 관리"
+      @click="() => emits(`onClickMoveLessonListPage`)"
+    ></v-list-item>
+
+    <v-divider/>
+
+    <v-list-item
+      prepend-icon="fa-solid fa-caret-right"
+      title="출석 관리"
+      @click="() => emits(`onClickMoveAttendancePage`)"
     ></v-list-item>
 
     <v-divider/>
@@ -34,7 +42,7 @@
 
 import useMemberInfo from "@/store/useMemberInfo";
 
-const emits = defineEmits(['onClickMoveInfo', 'onClickMoveAttendanceList', 'onClickMoveProgressList'])
+const emits = defineEmits([ 'onClickMoveProgramListPage', 'onClickMoveLessonListPage', 'onClickMoveAttendancePage', 'onClickMoveInfo' ])
 const memberInfo = useMemberInfo().getMemberInfo()
 
 </script>

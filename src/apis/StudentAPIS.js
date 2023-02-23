@@ -1,7 +1,38 @@
 import axios from "axios";
 import consts from "@/consts/const";
-import {ca} from "vuetify/locale";
 
+/** 최서연 ver.0.1 **/
+
+/** 대학생 회원 ID로 학생 정보 조회 **/
+export const getStudentInfo = async (id) => {
+
+  try {
+
+    const res = await axios.get(`${consts.DOMAIN}/api/students/${id}`)
+    return res.data
+
+  } catch (e) {
+
+    console.log(e)
+    return
+
+  }
+
+}
+
+/** 대학생 회원 ID로 학생 정보 수정 **/
+export const modifyStudentInfo = async (id) => {
+
+  try {
+    const res = await axios.get(`${consts.DOMAIN}/api/mail/${id}`)
+
+    return res.data
+  } catch (e) {
+    console.log(e)
+
+    return
+  }
+}
 
 /*** 임성현 ver.0.1 ***/
 

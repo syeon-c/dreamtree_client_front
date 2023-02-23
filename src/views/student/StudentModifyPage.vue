@@ -14,12 +14,13 @@
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import StudentModifyComponent from "@/components/admin/StudentModifyComponent.vue";
 import {useRoute, useRouter} from "vue-router";
+import useMemberInfo from "@/store/useMemberInfo";
 
 const router = useRouter()
 
 const route = useRoute()
 
-const studentId = route.query.id
+const studentId = useMemberInfo().getMemberInfo().id
 
 // 수정 후 다시 조회로 이동
 const moveInfo = () => {

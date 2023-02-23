@@ -1,9 +1,10 @@
 <template>
 
-  <h2>레슨 관리</h2>
-  <v-expansion-panels
+  <v-list-subheader style="margin-left: 20px">
+    {{ memberInfo.nickname}} 님이 진행 중인 레슨 목록
+  </v-list-subheader>
 
-  >
+  <v-expansion-panels>
     <v-expansion-panel
       v-for="program in lessons"
       :key="program.programId"
@@ -60,13 +61,17 @@
 
 import {onMounted, ref} from "vue";
 import {myLessonList, myProgramList} from "@/apis/StudentAPIS";
+import useMemberInfo from "@/store/useMemberInfo";
 
-
+const memberInfo = useMemberInfo().getMemberInfo()
+// const id = memberInfo.id
+const id = 1
 const lessons = ref([])
 
 const fetchGetList = async () => {
 
-  lessons.value = await myLessonList(1)
+  lessons.value = await myLessonList(id)
+  console.log(lessons.value)
 
 }
 

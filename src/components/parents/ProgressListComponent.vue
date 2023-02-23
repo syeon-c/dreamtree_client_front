@@ -29,9 +29,10 @@ import {getProgressList} from "@/apis/ProgressAPIS";
 import {useRoute} from "vue-router";
 import {onMounted, ref} from "vue";
 import ProgressDetailComponent from "@/components/parents/ProgressDetailComponent.vue";
+import useMemberInfo from "@/store/useMemberInfo";
 
-const route = useRoute()
-const parentId = parseInt(route.params.id)
+const memberInfo = useMemberInfo().getMemberInfo()
+const parentId = memberInfo.id
 const info = ref([])
 const fetchGetProgressList = async () => {
 

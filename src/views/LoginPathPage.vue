@@ -1,15 +1,15 @@
 <template>
   <DefaultLayout>
 
-    <RoleComponent @sendLoginPathValue="sendLoginPathValue" />
+    <LoginPathComponent @sendLoginPathValue="sendLoginPathValue" />
 
   </DefaultLayout>
 </template>
 
 <script setup>
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import RoleComponent from "@/components/LoginPathComponent.vue";
 import {useRouter} from "vue-router";
+import LoginPathComponent from "@/components/LoginPathComponent.vue";
 
 const router = useRouter()
 

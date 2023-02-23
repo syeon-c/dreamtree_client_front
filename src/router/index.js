@@ -14,7 +14,7 @@ const routes = [
       {
         path: '',
         name: 'MyPage',
-        component: () => import('@/views/admin/MyPage.vue'),
+        component: () => import('@/views/MyPage.vue'),
       },
       {
       path: 'member',
@@ -26,20 +26,41 @@ const routes = [
         name: 'ParentMyPage',
         component: () => import('@/views/parents/ParentMyPage.vue'),
       },
+      // 대학생 정보 조회
+      {
+        path: 'studentInfo/:id',
+        name: 'StudentInfoPage',
+        component: () => import('@/views/student/StudentInfoPage.vue'),
+      },
+      // 학부모 정보 조회
       {
         path: 'parentInfo/:id',
         name: 'ParentInfoPage',
         component: () => import('@/views/parents/ParentInfoPage.vue'),
       },
+      // 수강 중인 레슨 (학부모)
       {
         path: 'progress/:id',
         name: 'ProgressListPage',
         component: () => import('@/views/parents/ProgressListPage.vue'),
       },
+      // 출석 현황 조회
       {
         path: 'attendance',
         name: consts.MY_ATTENDANCE_PAGE,
-        component: () => import('@/views/attendance/MyAttendencePage.vue'),
+        component: () => import('@/views/attendance/MyAttendancePage.vue'),
+      },
+      {
+        // 쪽지
+        path: 'mail',
+        name: 'MailPage',
+        component: () => import('@/views/MailPage.vue')
+      },
+      {
+        // 프로그램 (대학생)
+        path: 'program/:id',
+        name: 'MyProgramListPage',
+        component: () => import('@/views/MyProgramListPage.vue')
       },
     ]
   },
@@ -116,12 +137,6 @@ const routes = [
         path: '/modify',
         name: 'StudentModifyPage',
         component: () => import('@/views/student/StudentModifyPage.vue')
-      },
-      {
-        // (학생) 쪽지
-        path: 'mail',
-        name: 'StudentMailPage',
-        component: () => import('@/views/student/StudentMailPage.vue')
       },
       {
         // 신고

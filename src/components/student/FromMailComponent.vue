@@ -81,6 +81,10 @@
 import {getFromEmail, getMail, removeEmail, writeEmail} from "@/apis/StudentAPIS";
 import {onMounted, ref} from "vue";
 import AddMailComponent from "@/components/student/AddMailComponent.vue";
+import useMemberInfo from "@/store/useMemberInfo";
+
+const memberInfo = useMemberInfo().getMemberInfo()
+const emailAddress = memberInfo.email
 
 const props = defineProps(['pNum', 'pSize'])
 
@@ -125,7 +129,7 @@ const fetchGetList = async () => {
 
   pageNum.value = parseInt(props.pNum) || 1
 
-  const fromResult = {mail: 'abcv123@naver.com', page: pageNum.value, size: props.pSize}
+  const fromResult = {mail: emailAddress, page: pageNum.value, size: props.pSize}
 
   const fromData = await getFromEmail(fromResult)
 

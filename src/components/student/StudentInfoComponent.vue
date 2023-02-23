@@ -1,7 +1,7 @@
 <template>
   <v-list lines="two">
 
-    <v-list-subheader>Parent Info</v-list-subheader>
+    <v-list-subheader>{{ studentInfo.nickname }}님의 회원정보</v-list-subheader>
 
     <!--회원 프로필 이미지 & 닉네임-->
     <v-list-item>
@@ -19,7 +19,7 @@
 
         <v-card-title
         >
-          {{ student.nickname }}
+          {{ studentInfo.nickname }}
         </v-card-title>
 
         <v-btn
@@ -27,7 +27,7 @@
           color="grey"
           size="small"
           icon="fa-solid fa-pen"
-          @click="() => emits('moveModify')"
+          @click="() => emits('onClickMoveModifyPage')"
         ></v-btn>
       </div>
     </v-list-item>
@@ -41,7 +41,7 @@
         style="margin-right: 50px"
       >
         <v-card-subtitle>EMAIL</v-card-subtitle>
-        <v-text>{{ student.email }}</v-text>
+        <v-text>{{ studentInfo.email }}</v-text>
       </div>
     </v-list-item>
 
@@ -54,7 +54,7 @@
         style="margin-right: 50px"
       >
         <v-card-subtitle>BIRTH</v-card-subtitle>
-        <v-text>{{ student.birth }}</v-text>
+        <v-text>{{ studentInfo.birth }}</v-text>
       </div>
     </v-list-item>
 
@@ -65,7 +65,7 @@
         style="margin-right: 50px"
       >
         <v-card-subtitle>GENDER</v-card-subtitle>
-        <v-text>{{ student.gender }}</v-text>
+        <v-text>{{ studentInfo.gender }}</v-text>
       </div>
     </v-list-item>
 
@@ -77,9 +77,9 @@
       >
         <v-card-subtitle>COLLEGE</v-card-subtitle>
         <v-text>
-          {{ student.college }}
+          {{ studentInfo.college }}
           <span style="position: absolute; right: 20%; background-color: pink; border-radius: 10px; padding: 5px">
-            {{student.authState == 'yes' ? '인증' : student.authState == 'pending' ? '요청 중' : '승인 거절'}}
+            {{ studentInfo.authState == 'yes' ? '인증' : studentInfo.authState == 'pending' ? '요청 중' : '승인 거절' }}
           </span></v-text>
       </div>
     </v-list-item>
@@ -91,7 +91,7 @@
         style="margin-right: 50px"
       >
         <v-card-subtitle>MAJOR</v-card-subtitle>
-        <v-text>{{ student.major }}</v-text>
+        <v-text>{{ studentInfo.major }}</v-text>
       </div>
     </v-list-item>
   </v-list>
@@ -155,9 +155,9 @@ import UploadComponent from "@/components/image/UploadComponent.vue";
 
 const props = defineProps(['id'])
 
-const emits = defineEmits(['moveModify'])
+const emits = defineEmits(['onClickMoveModifyPage'])
 
-const student = ref({})
+const studentInfo = ref({})
 
 const dialog = ref(false)
 
@@ -219,9 +219,9 @@ const onClickUploadButton = () => {
 
 const fetchGetInfo = async () => {
 
-  student.value = await getStudentInfo(props.id);
+  studentInfo.value = await getStudentInfo(props.id);
 
-  console.log("Student: ", student.value)
+  console.log("Student: ", studentInfo.value)
 
 }
 

@@ -1,7 +1,7 @@
 <template>
   <v-list lines="two">
 
-    <v-list-subheader>Parent Info</v-list-subheader>
+    <v-list-subheader>{{ memberInfo.nickname }} 님의 회원정보</v-list-subheader>
 
     <!--회원 프로필 이미지 & 닉네임-->
     <v-list-item>
@@ -40,7 +40,7 @@
         class="d-flex flex-no-wrap justify-md-space-between"
         style="margin-right: 50px"
       >
-        <v-card-subtitle>EMAIL</v-card-subtitle>
+        <v-card-subtitle>이메일 주소</v-card-subtitle>
         <v-text>{{ info.email }}</v-text>
       </div>
     </v-list-item>
@@ -53,7 +53,7 @@
         class="d-flex flex-no-wrap justify-md-space-between"
         style="margin-right: 50px"
       >
-        <v-card-subtitle>BIRTH</v-card-subtitle>
+        <v-card-subtitle>생년월일</v-card-subtitle>
         <v-text>{{ setLocalDateString(info.birth) }}</v-text>
       </div>
     </v-list-item>
@@ -65,19 +65,20 @@
 
 import {onMounted, ref} from "vue";
 import {getParentInfo} from "@/apis/ParentAPIS";
+import useMemberInfo from "@/store/useMemberInfo";
 
-const props = defineProps(['id'])
 const emits = defineEmits(['onClickMoveInfoModifyPage'])
+const memberInfo = useMemberInfo().getMemberInfo()
+const id = memberInfo.id
 
 const info = ref({email: null, nickname: null, birth: null, profileImgUrl: null})
 const fetchGetInfo = async () => {
 
-  const res = await getParentInfo(props.id)
+  const res = await getParentInfo(id)
   console.log(res)
   info.value = res
 
 }
-
 onMounted(() => {
   fetchGetInfo()
 })

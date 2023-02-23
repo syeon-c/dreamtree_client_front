@@ -8,7 +8,7 @@
       rounded="10"
     >
       <v-img
-        src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
+        src="student.profileImgUrl"
       ></v-img>
     </v-avatar>
   </div>

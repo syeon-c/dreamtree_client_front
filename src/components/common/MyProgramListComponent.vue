@@ -1,6 +1,6 @@
 <template>
 
-  <h2>프로그램 관리</h2>
+  <v-list-subheader style="margin-left: 20px">{{ memberInfo.nickname }} 님이 등록한 프로그램 목록</v-list-subheader>
   <v-expansion-panels
 
   >
@@ -32,13 +32,13 @@
             ></ProgramCurriculumDayComponent>
           </v-col>
         </v-row>
-        총회차: {{program.times}} <br>
+        총 회차: {{program.times}} <br>
         <ul style="list-style: none">
           <li v-for="file in program.fileList" :key="file.fileId">
             첨부파일(이미지url): {{file.url}}
           </li>
         </ul>
-        <v-btn>레슨조회</v-btn>
+        <v-btn>레슨 조회</v-btn>
       </v-expansion-panel-text>
       <v-divider></v-divider>
     </v-expansion-panel>
@@ -50,17 +50,20 @@
 import {myProgramList} from "@/apis/StudentAPIS";
 import {onMounted, ref} from "vue";
 import ProgramCurriculumDayComponent from "@/components/program/ProgramCurriculumDayComponent.vue";
+import useMemberInfo from "@/store/useMemberInfo";
 
 const programs = ref([])
+const memberInfo = useMemberInfo().getMemberInfo()
+const id = memberInfo.id
 
 
 const fetchGetList = async () => {
 
-  programs.value = await myProgramList(1)
+  programs.value = await myProgramList(id)
 
   console.log(programs.value)
-}
 
+}
 onMounted(() => {
   fetchGetList()
 })

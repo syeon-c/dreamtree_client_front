@@ -1,18 +1,15 @@
 <template>
+  <DefaultLayout>
 
-  <default-layout>
     <MyProgramListComponent />
-  </default-layout>
+
+  </DefaultLayout>
 </template>
 
-<script>
+<script setup>
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import MyProgramListComponent from "@/components/common/MyProgramListComponent.vue";
 
-export default {
-  name: "MyProgramList",
-  components: {MyProgramListComponent, DefaultLayout}
-}
 </script>
 
 <style scoped>
