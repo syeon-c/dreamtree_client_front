@@ -23,6 +23,14 @@
 
     <v-list-item
       prepend-icon="fa-solid fa-caret-right"
+      title="수강 신청 관리"
+      @click="() => emits(`onClickMoveLessonListPage`)"
+    ></v-list-item>
+
+    <v-divider/>
+
+    <v-list-item
+      prepend-icon="fa-solid fa-caret-right"
       title="출석 관리"
       @click="() => emits(`onClickMoveAttendancePage`)"
     ></v-list-item>

@@ -16,16 +16,6 @@ const routes = [
         name: 'MyPage',
         component: () => import('@/views/MyPage.vue'),
       },
-      {
-      path: 'member',
-      name: 'MemberAdminPage',
-      component: () => import('@/views/admin/MemberAdminPage.vue')
-      },
-      {
-        path: 'parent',
-        name: 'ParentMyPage',
-        component: () => import('@/views/parents/ParentMyPage.vue'),
-      },
       // 대학생 정보 조회
       {
         path: 'studentInfo/:id',
